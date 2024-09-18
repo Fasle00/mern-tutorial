@@ -1,7 +1,7 @@
-import Product from '../models/product.model.js';
-import mongoose from 'mongoose';
+const Product = require( '../models/product.model.js');
+const mongoose = require( 'mongoose');
 
-export const getProducts = async (req, res) => {
+const getProducts = async (req, res) => {
     try {
         const products = await Product.find({});
         res.status(200).json({ success: true, data: products });
@@ -11,7 +11,9 @@ export const getProducts = async (req, res) => {
     }
 }
 
-export const createProduct = async (req, res) => {
+module.exports = getProducts;
+
+const createProduct = async (req, res) => {
     const product = req.body;
 
 
@@ -30,7 +32,9 @@ export const createProduct = async (req, res) => {
     }
 }
 
-export const updateProduct = async (req, res) => {
+module.exports = createProduct;
+
+const updateProduct = async (req, res) => {
     const { id } = req.params;
 
     const product = req.body;
@@ -47,7 +51,9 @@ export const updateProduct = async (req, res) => {
     }
 }
 
-export const deleteProduct = async (req, res) => {
+module.exports = updateProduct;
+
+const deleteProduct = async (req, res) => {
     const { id } = req.params;
     
     if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -63,3 +69,5 @@ export const deleteProduct = async (req, res) => {
     }
 
 }
+
+module.exports = deleteProduct;

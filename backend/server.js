@@ -1,32 +1,55 @@
-import express from 'express';
-import dotenv from 'dotenv';
-import path from 'path';
+const express = require("express");
+const dotenv = require("dotenv");
+const path = require("path");
+const cors = require("cors");
+const cookieSession = require("cookie-session");
+const passport = require("passport");
 
-import { connectDB } from './config/db.js';
+require("./auth.js");
 
-import productRoutes from './routes/product.route.js';
+const connectDB = require("./config/db.js");
+
+const productRoutes = require("./routes/product.route.js");
+const authRoutes = require("./routes/auth.route.js");
 
 dotenv.config();
 
 const app = express();
 
-const PORT = process.env.PORT || 5000;
+app.use(
+  cookieSession({ name: "session", keys: ["lama"], maxAge: 24 * 60 * 60 * 100 })
+);
 
-const __dirname = path.resolve();
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.use(
+  cors({
+    origin: "http://localhost:5000",
+    methods: "GET,POST,PUT,DELETE",
+    credentials: true,
+  })
+);
+
+const PORT = process.env.PORT || 5000;
 
 app.use(express.json());
 
-app.use("/api/products", productRoutes)
+app.use("/api/products", productRoutes);
+app.use("/auth", authRoutes);
 
-if(process.env.NODE_ENV === "production") {
-    app.use(express.static(path.join(__dirname, "/frontend/dist")));
+const dirname = path.resolve();
+console.log("dirname: ", dirname);
 
-    app.get("*", (req, res) => {
-        res.sendFile(path.resolve(__dirname, "frontend", "dist", "index.html"));
-    });
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(dirname, "/frontend/dist")));
+
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(dirname, "frontend", "dist", "index.html"));
+  });
 }
 
 app.listen(PORT, () => {
-    connectDB();
-    console.log(`Server started at \"http://localhost:${PORT}\"`);
+  connectDB();
+  console.log(`Server started at \"http://localhost:${PORT}\"`);
 });
