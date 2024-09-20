@@ -19,7 +19,7 @@ router.post("/", async (req, res) => {
     if (!req.session.user) {
         return res.status(401).json({ success: false, message: "Unauthorized" });
     }
-    if (!(req.session.user.accessLevel === "admin" || !req.session.user.accessLevel === "editor")) {
+    if (!(req.session.user.accessLevel === "admin" || req.session.user.accessLevel === "editor")) {
         return res.status(401).json({ success: false, message: "Unauthorized" });
     }
     
@@ -46,7 +46,7 @@ router.put("/:id", async (req, res) => {
     if (!req.session.user) {
         return res.status(401).json({ success: false, message: "Unauthorized" });
     }
-    if (!(req.session.user.accessLevel === "admin" || !req.session.user.accessLevel === "editor")) {
+    if (!(req.session.user.accessLevel === "admin" || req.session.user.accessLevel === "editor")) {
         return res.status(401).json({ success: false, message: "Unauthorized" });
     }
 
@@ -69,7 +69,7 @@ router.delete("/:id", async (req, res) => {
     if (!req.session.user) {
         return res.status(401).json({ success: false, message: "Unauthorized" });
     }
-    if (!(req.session.user.accessLevel === "admin" || !req.session.user.accessLevel === "editor")) {
+    if (!(req.session.user.accessLevel === "admin" || req.session.user.accessLevel === "editor")) {
         return res.status(401).json({ success: false, message: "Unauthorized" });
     }
     
