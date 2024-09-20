@@ -1,7 +1,7 @@
-import { Button, Center, Container, Flex, HStack, Text, useColorMode, Menu, MenuButton, MenuList, MenuItem, useDisclosure, Image } from "@chakra-ui/react";
+import { Button, Container, Flex, HStack, Text, useColorMode, Menu, MenuButton, MenuList, MenuItem, useDisclosure, Image } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 
-import { PlusSquareIcon, } from "@chakra-ui/icons"
+import { PlusSquareIcon, HamburgerIcon } from "@chakra-ui/icons"
 import { IoMoon } from "react-icons/io5";
 import { LuSun } from "react-icons/lu";
 
@@ -34,6 +34,10 @@ const Navbar = ({ user }) => {
                 </Text>
 
                 <HStack spacing={2} alignItems={"center"}>
+                    <Button onClick={toggleColorMode}>
+                        {colorMode === "light" ? <IoMoon /> : <LuSun size='20' />}
+                    </Button>
+
                     {user ? (
 
                         <><Link to={"/create"}>
@@ -65,13 +69,32 @@ const Navbar = ({ user }) => {
 
                     )}
 
-                    <Button onClick={toggleColorMode}>
-                        {colorMode === "light" ? <IoMoon /> : <LuSun size='20' />}
-                    </Button>
+                    <Menu>
+                        <MenuButton as={Button} rightIcon={<HamburgerIcon />} variant={'link'} size={'lg'}>
+
+                        </MenuButton>
+                        <MenuList>
+                            <MenuItem as="a" href='/create'>
+                                <Button w={"full"} bg={"bg"} variant={'link'}>
+                                    <MenuItem>
+                                        Create
+                                    </MenuItem>
+                                </Button>
+                            </MenuItem>
+                            <MenuItem as="a" href='/login'>
+                                <Button w={"full"} bg={"bg"} variant={'link'}>
+                                    <MenuItem>
+                                        Logga in
+                                    </MenuItem>
+                                </Button>
+                            </MenuItem>
+                        </MenuList>
+                    </Menu>
+
                 </HStack>
 
             </Flex>
-        </Container>
+        </Container >
     )
 }
 export default Navbar
