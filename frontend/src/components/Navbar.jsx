@@ -45,7 +45,7 @@ const Navbar = ({ user }) => {
                                 {({ isOpen }) => (
                                     <>
                                         <MenuButton isActive={isOpen} as={Button}>
-                                            <Image src={user.photos[0].value} alt="profile picture" w="2rem" borderRadius='full'/>
+                                            <Image src={user.photos} alt="profile picture" w="2rem" borderRadius='full'/>
                                         </MenuButton>
                                         <MenuList>
                                             <MenuItem>{user.displayName}</MenuItem>

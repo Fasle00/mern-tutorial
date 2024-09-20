@@ -2,6 +2,7 @@ const express = require( 'express');
 //const { createProduct, deleteProduct, getProducts, updateProduct } = require( '../controllers/product.controller.js');
 const Product = require( '../models/product.model.js');
 const mongoose = require( 'mongoose');
+const session = require('express-session');
 
 const router = express.Router();
 
@@ -15,9 +16,14 @@ router.get("/", async (req, res) => {
     }
 });
 router.post("/", async (req, res) => {
+    if (!req.session.user) {
+        return res.status(401).json({ success: false, message: "Unauthorized" });
+    }
+    if (!(req.session.user.accessLevel === "admin" || !req.session.user.accessLevel === "editor")) {
+        return res.status(401).json({ success: false, message: "Unauthorized" });
+    }
+    
     const product = req.body;
-
-
     if (!product.name || !product.price || !product.image) {
         return res.status(400).json({ success: false, message: "Please provide all fields" });
     }
@@ -35,6 +41,15 @@ router.post("/", async (req, res) => {
 router.put("/:id", async (req, res) => {
     const { id } = req.params;
 
+    console.log("update req")
+    console.log("req.session.user: ", req.session.user);
+    if (!req.session.user) {
+        return res.status(401).json({ success: false, message: "Unauthorized" });
+    }
+    if (!(req.session.user.accessLevel === "admin" || !req.session.user.accessLevel === "editor")) {
+        return res.status(401).json({ success: false, message: "Unauthorized" });
+    }
+
     const product = req.body;
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -50,6 +65,13 @@ router.put("/:id", async (req, res) => {
 });
 router.delete("/:id", async (req, res) => {
     const { id } = req.params;
+    
+    if (!req.session.user) {
+        return res.status(401).json({ success: false, message: "Unauthorized" });
+    }
+    if (!(req.session.user.accessLevel === "admin" || !req.session.user.accessLevel === "editor")) {
+        return res.status(401).json({ success: false, message: "Unauthorized" });
+    }
     
     if (!mongoose.Types.ObjectId.isValid(id)) {
 		return res.status(404).json({ success: false, message: "Invalid Product Id" });

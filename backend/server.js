@@ -11,6 +11,7 @@ const connectDB = require("./config/db.js");
 
 const productRoutes = require("./routes/product.route.js");
 const authRoutes = require("./routes/auth.route.js");
+const userRoutes = require("./routes/user.route.js");
 
 dotenv.config();
 
@@ -37,6 +38,7 @@ app.use(express.json());
 
 app.use("/api/products", productRoutes);
 app.use("/auth", authRoutes);
+app.use("/user", userRoutes);
 
 const dirname = path.resolve();
 console.log("dirname: ", dirname);

@@ -14,9 +14,13 @@ const userSchema = new mongoose.Schema({
         required: true
     },
     photos: {
-        type: Array,
+        type: String,
         required: true
     },
+    accessLevel: {
+        type: String,
+        default: "user"
+    }
 }, {
     timestamps: true
 });
