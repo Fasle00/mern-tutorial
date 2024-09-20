@@ -10,8 +10,10 @@ const CLIENT_URL = "http://localhost:5000/";
 router.get("/login/success", async (req, res) => {
   if (req.user) {
     console.log("req.user: ", req.user);
-
-    if (!User.findOne({ googleId: req.user.id })) {
+    console.log(!User.findOne({ googleId: req.user.id }))
+    const foundUser = await User.findOne({ googleId: req.user.id });
+    console.log("foundUser: ", foundUser)
+    if (foundUser === null) {
       const newUser = new User({
         googleId: req.user.id,
         displayName: req.user.displayName,
