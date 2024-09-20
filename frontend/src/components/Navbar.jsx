@@ -1,7 +1,7 @@
 import { Button, Center, Container, Flex, HStack, Text, useColorMode, Menu, MenuButton, MenuList, MenuItem, useDisclosure, Image } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 
-import { PlusSquareIcon,  } from "@chakra-ui/icons"
+import { PlusSquareIcon, } from "@chakra-ui/icons"
 import { IoMoon } from "react-icons/io5";
 import { LuSun } from "react-icons/lu";
 
@@ -45,7 +45,7 @@ const Navbar = ({ user }) => {
                                 {({ isOpen }) => (
                                     <>
                                         <MenuButton isActive={isOpen} as={Button}>
-                                            <Image src={user.photos} alt="profile picture" w="2rem" borderRadius='full'/>
+                                            <Image src={user.photos} alt="profile picture" w="2rem" borderRadius='full' />
                                         </MenuButton>
                                         <MenuList>
                                             <MenuItem>{user.displayName}</MenuItem>
@@ -58,8 +58,11 @@ const Navbar = ({ user }) => {
 
                     ) : (
                         <Link to={"/login"}>
-                            Login
+                            <Button>
+                                Logga in
+                            </Button>
                         </Link>
+
                     )}
 
                     <Button onClick={toggleColorMode}>
