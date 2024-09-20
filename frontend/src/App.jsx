@@ -43,7 +43,7 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={user ? <Navigate to="/" /> : <Login/> } />
-        <Route path="/create" element={ user ? <Navigate to="/create" /> : <Navigate to="/login"/>} />
+        <Route path="/create" element={ user ? <CreatePage/> : <Navigate to="/login"/>} />
       </Routes>
     </Box>
   )
