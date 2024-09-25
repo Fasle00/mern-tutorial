@@ -3,16 +3,14 @@ const router = express.Router();
 const passport = require("passport");
 const User = require("../models/user.model");
 const mongoose = require("mongoose");
-const session = require('express-session');
+const session = require("express-session");
 
 const CLIENT_URL = "http://localhost:5000/";
 
 router.get("/login/success", async (req, res) => {
   if (req.user) {
-    console.log("req.user: ", req.user);
-    console.log(!User.findOne({ googleId: req.user.id }))
     const foundUser = await User.findOne({ googleId: req.user.id });
-    console.log("foundUser: ", foundUser)
+
     if (foundUser === null) {
       const newUser = new User({
         googleId: req.user.id,
@@ -36,8 +34,7 @@ router.get("/login/success", async (req, res) => {
       }
     } else {
       const user = await User.findOne({ googleId: req.user.id });
-      req.session.user = user;
-      console.log("user: ", user)
+      req.session.user = user;;
 
       return res.status(200).json({
         success: true,
@@ -56,7 +53,7 @@ router.get("/login/failed", (req, res) => {
 });
 
 router.get("/logout", (req, res) => {
-    req.session.user = null;
+  req.session.user = null;
   req.logout();
   res.redirect(CLIENT_URL);
 });
