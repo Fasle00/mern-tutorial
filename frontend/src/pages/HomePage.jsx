@@ -13,11 +13,11 @@ const HomePage = () => {
         fetchProducts();
     }, [fetchProducts])
 
-    console.log("Products: ", products);
+    /* console.log("Products: ", products);
     console.log("Products Length: ", products.length);
     for (let i = 0; i < products.length; i++) {
         console.log("Products: ", products[i]._id);
-    }
+    } */
 
     return (
         <Container maxW={"container.xl"} py={12} >
