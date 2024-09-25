@@ -38,7 +38,7 @@ app.use(express.json());
 
 app.use("/api/products", productRoutes);
 app.use("/auth", authRoutes);
-app.use("/user", userRoutes);
+app.use("/api/users", userRoutes);
 
 const dirname = path.resolve();
 console.log("dirname: ", dirname);
