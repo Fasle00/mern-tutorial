@@ -42,7 +42,7 @@ router.post("/cart", async (req, res) => {
   }
 
   try {
-    const user = await User.findById(req.session.user._id || "66eac8eb1f04e3e0d2ca9d15");
+    const user = await User.findById(req.session.user._id);
     user.cart.push(product);
     await user.save();
     res.status(200).json({ success: true, message: "Product added to cart" });
@@ -61,12 +61,36 @@ router.delete("/cart", async (req, res) => {
   }
 
   try {
-    const user = await User.findById(/* req.session.user._id ||  */"66eac8eb1f04e3e0d2ca9d15");
+    const user = await User.findById(req.session.user._id);
     user.cart = user.cart.filter((cartItem) => cartItem._id !== product._id && cartItem.size !== product.size && cartItem.color !== product.color);
     await user.save();
     res.status(200).json({ success: true, message: "Product removed from cart" });
   } catch (error) {
     console.log("error in removing product from cart", error.message);
+    res.status(500).json({ success: false, message: "Server error" });
+  }
+});
+
+router.put("/cart", async (req, res) => {
+  if (!isUser(req.session.user)) return res.status(401).json({ success: false, message: "Unauthorized" });
+
+  const product = req.body;
+  if (!mongoose.Types.ObjectId.isValid(product._id)) {
+    return res.status(404).json({ success: false, message: "Product not found" });
+  }
+
+  try {
+    const user = await User.findById(req.session.user._id);
+    user.cart = user.cart.map((cartItem) => {
+      if (cartItem._id === product._id && cartItem.size === product.size && cartItem.color === product.color) {
+        return product;
+      }
+      return cartItem;
+    });
+    await user.save();
+    return res.status(200).json({ success: true, message: "Product updated in cart" });
+  } catch (error) {
+    console.log("error in updating product in cart", error.message);
     res.status(500).json({ success: false, message: "Server error" });
   }
 });
