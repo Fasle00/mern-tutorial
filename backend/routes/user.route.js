@@ -5,12 +5,20 @@ const User = require("../models/user.model");
 const Product = require("../models/product.model");
 const mongoose = require("mongoose");
 const session = require("express-session");
-const { isAdmin, isEditor, isAdminOrEditor, isUser } = require("../validation.js")
+const env = require("dotenv");
+env.config();
+const {
+  isAdmin,
+  isEditor,
+  isAdminOrEditor,
+  isUser,
+} = require("../validation.js");
 
 const adminId = "66eac8eb1f04e3e0d2ca9d15";
 
 router.get("/", async (req, res) => {
-  if (!isAdmin(req.session.user)) return res.status(401).json({ success: false, message: "Unauthorized" });
+  if (!isAdmin(req.session.user))
+    return res.status(401).json({ success: false, message: "Unauthorized" });
 
   try {
     const users = await User.find({});
@@ -21,38 +29,71 @@ router.get("/", async (req, res) => {
   }
 });
 
+router.get("/:id", async (req, res) => {
+  if (!req.session.user) return res.status(401).json({ success: false, message: "no session user" });
+  if (!(req.params.id === req.session.user._id || isAdmin(req.session.user))) return res.status(401).json({ success: false, message: "wrong user" });
+  
+  if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+    return res
+      .status(404)
+      .json({ success: false, message: "User not found" });
+  }
+  
+  try {
+    const user = await User.findById(req.params.id);
+    if (!req.params.id === user._id) {
+      if (!isAdmin(req.session.user))
+        return res.status(401).json({ success: false, message: "Unauthorized" });
+    }
+    res.status(200).json({ success: true, data: user });
+  } catch (error) {
+    console.log("error in fetching user", error.message);
+    res.status(500).json({ success: false, message: "Server error" });
+  }
+});
+
 router.get("/cart", async (req, res) => {
-  if (!isUser(req.session.user)) return res.status(401).json({ success: false, message: "Unauthorized" });
+  if (!isUser(req.session.user))
+    return res.status(401).json({ success: false, message: "Unauthorized" });
 
   try {
-    const data = await User.find({'_id': req.session.user._id}, "cart");
+    const data = await User.find({ _id: req.session.user._id }, "cart");
     const user = data[0];
-   
+
     res.status(200).json({ success: true, cart: user.cart });
   } catch (error) {
     console.log("error in fetching users", error.message);
     res.status(500).json({ success: false, message: "Server error" });
   }
-}); 
+});
 
 router.post("/cart", async (req, res) => {
-  if (!isUser(req.session.user)) return res.status(401).json({ success: false, message: "Unauthorized" });
+  if (!isUser(req.session.user))
+    return res.status(401).json({ success: false, message: "Unauthorized" });
 
   const product = req.body;
   if (!mongoose.Types.ObjectId.isValid(product._id)) {
-    return res.status(404).json({ success: false, message: "Product not found" });
+    return res
+      .status(404)
+      .json({ success: false, message: "Product not found" });
   }
 
   try {
     const user = await User.findById(req.session.user._id);
     let itemInCart = false;
     user.cart.map((cartItem) => {
-      if (cartItem._id === product._id && cartItem.size === product.size && cartItem.color === product.color) {
+      if (
+        cartItem._id === product._id &&
+        cartItem.size === product.size &&
+        cartItem.color === product.color
+      ) {
         itemInCart = true;
       }
     });
     if (itemInCart) {
-      return res.status(400).json({ success: false, message: "Product already in cart" });
+      return res
+        .status(400)
+        .json({ success: false, message: "Product already in cart" });
     }
     user.cart.push(product);
     await user.save();
@@ -64,18 +105,28 @@ router.post("/cart", async (req, res) => {
 });
 
 router.delete("/cart", async (req, res) => {
-  if (!isUser(req.session.user)) return res.status(401).json({ success: false, message: "Unauthorized" });
+  if (!isUser(req.session.user))
+    return res.status(401).json({ success: false, message: "Unauthorized" });
 
   const product = req.body;
   if (!mongoose.Types.ObjectId.isValid(product._id)) {
-    return res.status(404).json({ success: false, message: "Product not found" });
+    return res
+      .status(404)
+      .json({ success: false, message: "Product not found" });
   }
 
   try {
     const user = await User.findById(req.session.user._id);
-    user.cart = user.cart.filter((cartItem) => cartItem._id !== product._id && cartItem.size !== product.size && cartItem.color !== product.color);
+    user.cart = user.cart.filter(
+      (cartItem) =>
+        cartItem._id !== product._id &&
+        cartItem.size !== product.size &&
+        cartItem.color !== product.color
+    );
     await user.save();
-    res.status(200).json({ success: true, message: "Product removed from cart" });
+    res
+      .status(200)
+      .json({ success: true, message: "Product removed from cart" });
   } catch (error) {
     console.log("error in removing product from cart", error.message);
     res.status(500).json({ success: false, message: "Server error" });
@@ -83,23 +134,32 @@ router.delete("/cart", async (req, res) => {
 });
 
 router.put("/cart", async (req, res) => {
-  if (!isUser(req.session.user)) return res.status(401).json({ success: false, message: "Unauthorized" });
+  if (!isUser(req.session.user))
+    return res.status(401).json({ success: false, message: "Unauthorized" });
 
   const product = req.body;
   if (!mongoose.Types.ObjectId.isValid(product._id)) {
-    return res.status(404).json({ success: false, message: "Product not found" });
+    return res
+      .status(404)
+      .json({ success: false, message: "Product not found" });
   }
 
   try {
     const user = await User.findById(req.session.user._id);
     user.cart = user.cart.map((cartItem) => {
-      if (cartItem._id === product._id && cartItem.size === product.size && cartItem.color === product.color) {
+      if (
+        cartItem._id === product._id &&
+        cartItem.size === product.size &&
+        cartItem.color === product.color
+      ) {
         return product;
       }
       return cartItem;
     });
     await user.save();
-    return res.status(200).json({ success: true, message: "Product updated in cart" });
+    return res
+      .status(200)
+      .json({ success: true, message: "Product updated in cart" });
   } catch (error) {
     console.log("error in updating product in cart", error.message);
     res.status(500).json({ success: false, message: "Server error" });
