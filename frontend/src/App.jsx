@@ -4,9 +4,12 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import AdminPage from './pages/AdminPage';
 import CreatePage from './pages/CreatePage';
 import HomePage from './pages/HomePage';
+import SelectionPage from './pages/SelectionPage';
+import LoginPage from './pages/LoginPage';
+import CartPage from './pages/CartPage';
+import ViewProductPage from './pages/ViewProductPage';
 
 import Navbar from './components/Navbar';
-import Login from './pages/Login';
 
 import { useEffect, useState } from 'react';
 
@@ -45,13 +48,17 @@ function App() {
   } */
 
   return (
-    <Box minH={"100vh"} bg={useColorModeValue("gray.100", "gray.900")} >
-      <Navbar user={ user } />
+    <Box minH={"100vh"} bg={useColorModeValue("#E1F4FF", "#61737D")} >
+      <Navbar user={ user } setUser={setUser}/>
       <Routes>
         <Route path="/" element={ <HomePage/> } />
-        <Route path="/login" element={ user ? <Navigate to="/" /> : <Login /> } />
+        <Route path="/login" element={ user ? <Navigate to="/" /> : <LoginPage /> } />
         <Route path="/create" element={ user ? <CreatePage/> : <Navigate to="/login" />} />
-        {<Route path="/users" element={ user ? ( user.accessLevel==="admin" ? <AdminPage />  : <Navigate to="/login"/>) : <Navigate to="/login"/> } />}
+        <Route path="/users" element={ user && user.accessLevel==="admin" ? <AdminPage /> : <Navigate to="/login" />}/>
+        <Route path="/cart" element={<CartPage/>}/>
+        <Route path="/products/:id" element={<ViewProductPage />} />
+        <Route path="/:id" element={<SelectionPage />} />
+        <Route path="/:id/:id" element={<SelectionPage />} />
       </Routes>
     </Box>
   )

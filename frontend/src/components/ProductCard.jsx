@@ -87,6 +87,8 @@ const ProductCard = ({ product }) => {
                 shadow: "xl"
             }}
             bg={bg}
+            as="a"
+            href={`/products/${product._id}`}
         >
             <Image src={product.image} alt={product.name} h={48} w="full" object-fit="cover" />
 

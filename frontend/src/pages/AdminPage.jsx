@@ -25,20 +25,13 @@ import { useUserStore } from '../store/user'
 
 const AdminPage = () => {
     const { fetchUsers, users } = useUserStore();
-    
-    /* const users = [
-        { displayName: "Fabian", email: "test.mail.com", accessLevel: "admin" },
-        { displayName: "feet", email: "centimetres (cm)", accessLevel: "editor" },
-        { displayName: "yards", email: "metres (m)", accessLevel: "0.91444" }
-        ]; */
-        
-        
-        useEffect(() => {
-            fetchUsers()
-        }, [fetchUsers]);
-        
-        const [updatedUsers, setUpdatedUsers] = useState(users);
 
+    useEffect(() => {
+        fetchUsers()
+    }, [fetchUsers]);
+        
+    const [updatedUsers, setUpdatedUsers] = useState(users);
+    
     console.log("users", users);
 
     const handleUpdateUser = async () => {
@@ -130,7 +123,6 @@ const AdminPage = () => {
                 </TabPanel>
             </TabPanels>
         </Tabs>
-
     )
 }
 
