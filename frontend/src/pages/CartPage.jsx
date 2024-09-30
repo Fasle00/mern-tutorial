@@ -1,18 +1,19 @@
 import { Box, Button, Center, Text, useColorModeValue, VStack, HStack, Heading, Link, Stack, SimpleGrid  } from "@chakra-ui/react"
 import CartItem from "../components/CartItem"
 
+
 const CartPage= () => {
 
 const cart = [{
     _id:CartPage.ItemId, 
     color:CartPage.ItemColor, 
     size:CartPage.ItemSize, 
-    amount:CartPage.ItemQuantity
+    quantity:CartPage.ItemQuantity
 },{
     _id:CartPage.ItemId, 
     color:CartPage.ItemColor, 
     size:CartPage.ItemSize, 
-    amount:CartPage.ItemQuantity
+    quantity:CartPage.ItemQuantity
 }]
 
     return(
