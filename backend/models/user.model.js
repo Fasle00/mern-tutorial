@@ -20,6 +20,10 @@ const userSchema = new mongoose.Schema({
     accessLevel: {
         type: String,
         default: "user"
+    },
+    cart: {
+        type: Array,
+        default: []
     }
 }, {
     timestamps: true
