@@ -19,7 +19,7 @@ function isAdmin(user) {
  * @returns boolean
  */
 function isEditor(user) {
-    if (process.env.NODE_SAFE !== "unsafe") return true;
+    if (process.env.NODE_SAFE === "unsafe") return true;
     if (!user) return false;
     return user.accessLevel === "editor";
 }
@@ -31,7 +31,7 @@ function isEditor(user) {
  * @returns boolean
  */
 function isAdminOrEditor(user) {
-    if (process.env.NODE_SAFE !== "unsafe") return true;
+    if (process.env.NODE_SAFE === "unsafe") return true;
     if (!user) return false;
     return user.accessLevel === "admin" || user.accessLevel === "editor";
 }
@@ -43,7 +43,7 @@ function isAdminOrEditor(user) {
  * @returns boolean
  */
 function isUser(user) {
-    if (process.env.NODE_SAFE !== "unsafe") return true;
+    if (process.env.NODE_SAFE === "unsafe") return true;
     if (!user) return false;
     return user.accessLevel === "user";
 }
