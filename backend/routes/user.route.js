@@ -7,6 +7,8 @@ const mongoose = require("mongoose");
 const session = require("express-session");
 const { isAdmin, isEditor, isAdminOrEditor, isUser } = require("../validation.js")
 
+const adminId = "66eac8eb1f04e3e0d2ca9d15";
+
 router.get("/", async (req, res) => {
   if (!isAdmin(req.session.user)) return res.status(401).json({ success: false, message: "Unauthorized" });
 
@@ -43,6 +45,15 @@ router.post("/cart", async (req, res) => {
 
   try {
     const user = await User.findById(req.session.user._id);
+    let itemInCart = false;
+    user.cart.map((cartItem) => {
+      if (cartItem._id === product._id && cartItem.size === product.size && cartItem.color === product.color) {
+        itemInCart = true;
+      }
+    });
+    if (itemInCart) {
+      return res.status(400).json({ success: false, message: "Product already in cart" });
+    }
     user.cart.push(product);
     await user.save();
     res.status(200).json({ success: true, message: "Product added to cart" });
