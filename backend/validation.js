@@ -48,4 +48,16 @@ function isUser(user) {
     return user.accessLevel === "user";
 }
 
-module.exports = { isAdmin, isEditor, isAdminOrEditor, isUser };
+/**
+ * Checks if run in unsafe mode and returns true is so.
+ * If not, checks if the users accessLevel is admin or user.
+ * @param {User} user the session user
+ * @returns boolean
+ */
+function isAdminOrUser(user) {
+    if (process.env.NODE_SAFE === "unsafe") return true;
+    if (!user) return false;
+    return user.accessLevel === "admin" || user.accessLevel === "user";
+}
+
+module.exports = { isAdmin, isEditor, isAdminOrEditor, isUser, isAdminOrUser };
