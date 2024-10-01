@@ -10,14 +10,15 @@ env.config();
 const {
   isAdmin,
   isEditor,
-  isAdminOrEditor,
   isUser,
+  isAdminOrEditor,
+  isAdminOrUser,
 } = require("../validation.js");
 
 const adminId = "66eac8eb1f04e3e0d2ca9d15";
 
 router.get("/", async (req, res) => {
-    if (!isUser(req.session.user) || !isAdmin(req.session.user))  return res.status(401).json({ success: false, message: "Unauthorized" });
+    if (!isAdminOrUser(req.session.user)) return res.status(401).json({ success: false, message: "Unauthorized" });
   
     try {
       const data = await User.find({ _id: req.session.user._id }, "cart");
@@ -29,10 +30,22 @@ router.get("/", async (req, res) => {
       res.status(500).json({ success: false, message: "Server error" });
     }
   });
+  router.get("/:id", async (req, res) => {
+    if (!isAdmin(req.session.user)) return res.status(401).json({ success: false, message: "Unauthorized" });
+  
+    try {
+      const data = await User.find({ _id: req.params.id }, "cart");
+      const user = data[0];
+  
+      res.status(200).json({ success: true, cart: user.cart });
+    } catch (error) {
+      console.log("error in fetching users", error.message);
+      res.status(500).json({ success: false, message: "Server error" });
+    }
+  });
   
   router.post("/", async (req, res) => {
-    if (!isUser(req.session.user))
-      return res.status(401).json({ success: false, message: "Unauthorized" });
+    if (!isUser(req.session.user)) return res.status(401).json({ success: false, message: "Unauthorized" });
   
     const product = req.body;
     if (!mongoose.Types.ObjectId.isValid(product._id)) {
@@ -68,8 +81,7 @@ router.get("/", async (req, res) => {
   });
   
   router.delete("/", async (req, res) => {
-    if (!isUser(req.session.user))
-      return res.status(401).json({ success: false, message: "Unauthorized" });
+    if (!isAdminOrUser(req.session.user)) return res.status(401).json({ success: false, message: "Unauthorized" });
   
     const product = req.body;
     if (!mongoose.Types.ObjectId.isValid(product._id)) {
@@ -97,8 +109,7 @@ router.get("/", async (req, res) => {
   });
   
   router.put("/", async (req, res) => {
-    if (!isUser(req.session.user))
-      return res.status(401).json({ success: false, message: "Unauthorized" });
+    if (!isAdminOrUser(req.session.user)) return res.status(401).json({ success: false, message: "Unauthorized" });
   
     const product = req.body;
     if (!mongoose.Types.ObjectId.isValid(product._id)) {
