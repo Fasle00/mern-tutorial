@@ -119,7 +119,6 @@ const ProductDetails = ({ product }) => {
                     Färg:
                 </Text>
                 <Stack {...getRootProps()}>
-                    <Text>The selected radio is: {value}</Text>
                     <HStack>
                         {colors.map((colors) => {
                             return (

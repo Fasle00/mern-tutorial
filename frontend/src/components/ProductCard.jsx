@@ -55,26 +55,26 @@ const ProductCard = ({ product }) => {
     };
 
     const handleUpdateProduct = async (pid, updatedProduct) => {
-		const { success, message } = await updateProduct(pid, updatedProduct);
-		onClose();
-		if (!success) {
-			toast({
-				title: "Error",
-				description: message,
-				status: "error",
-				duration: 3000,
-				isClosable: true,
-			});
-		} else {
-			toast({
-				title: "Success",
-				description: "Product updated successfully",
-				status: "success",
-				duration: 3000,
-				isClosable: true,
-			});
-		}
-	};
+        const { success, message } = await updateProduct(pid, updatedProduct);
+        onClose();
+        if (!success) {
+            toast({
+                title: "Error",
+                description: message,
+                status: "error",
+                duration: 3000,
+                isClosable: true,
+            });
+        } else {
+            toast({
+                title: "Success",
+                description: "Product updated successfully",
+                status: "success",
+                duration: 3000,
+                isClosable: true,
+            });
+        }
+    };
 
     return (
         <Box
@@ -87,25 +87,28 @@ const ProductCard = ({ product }) => {
                 shadow: "xl"
             }}
             bg={bg}
-            as="a"
-            href={`/products/${product._id}`}
         >
-            <Image src={product.image} alt={product.name} h={48} w="full" object-fit="cover" />
+            <Box
+                as="a"
+                href={`/products/${product._id}`}
+            >
+                <Image src={product.imageYellow} alt={product.name} h={48} w="full" object-fit="cover" />
 
-            <Box p={4} >
-                <Heading as='h3' size='md' mb={2} >
-                    {product.name}
-                </Heading>
+                <Box p={4} as="a">
+                    <Heading as='h3' size='md' mb={2} >
+                        {product.name}
+                    </Heading>
 
-                <Text fontWeight='bold' fontSize='xl' color={textColor} mb={4}>
-                    ${product.price}
-                </Text>
+                    <Text fontWeight='bold' fontSize='xl' color={textColor} mb={4}>
+                        {product.price}:-
+                    </Text>
 
-                <HStack spacing={2} >
-                    <IconButton icon={<EditIcon />} onClick={onOpen} colorScheme="blue" />
-                    <IconButton icon={<DeleteIcon />} onClick={() => handleDeleteProduct(product._id)} colorScheme="red" />
-                </HStack>
+                </Box>
             </Box>
+            <HStack spacing={2} >
+                <IconButton icon={<EditIcon />} onClick={onOpen} colorScheme="blue" />
+                <IconButton icon={<DeleteIcon />} onClick={() => handleDeleteProduct(product._id)} colorScheme="red" />
+            </HStack>
 
             <Modal isOpen={isOpen} onClose={onClose} >
                 <ModalOverlay />
