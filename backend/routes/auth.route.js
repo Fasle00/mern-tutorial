@@ -16,7 +16,7 @@ router.get("/login/success", async (req, res) => {
         googleId: req.user.id,
         displayName: req.user.displayName,
         email: req.user.emails[0].value,
-        photos: req.user.photos[0].value,
+        image: req.user.photos[0].value,
       });
 
       try {
