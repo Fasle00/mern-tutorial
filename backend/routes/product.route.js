@@ -17,12 +17,22 @@ router.get("/", async (req, res) => {
   }
 });
 router.post("/", async (req, res) => {
-  if (isAdminOrEditor(req.session.user)) {
+  if (!isAdminOrEditor(req.session.user)) {
     return res.status(401).json({ success: false, message: "Unauthorized" });
   }
 
   const product = req.body;
-  if (!product.name || !product.price || !product.image) {
+  if (
+    !product.name || 
+    !product.price || 
+    !product.type || 
+    !product.category || 
+    !product.size || 
+    !product.imageRed || 
+    !product.imageBlue || 
+    !product.imageGreen || 
+    !product.imageYellow
+  ) {
     return res
       .status(400)
       .json({ success: false, message: "Please provide all fields" });
@@ -41,24 +51,21 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.put("/:productId", async (req, res) => {
-  console.log("update req");
-  console.log("req.session.user: ", req.session.user);
-
-  if (isAdminOrEditor(req.session.user)) {
+router.put("/:id", async (req, res) => {
+  if (!isAdminOrEditor(req.session.user)) {
     return res.status(401).json({ success: false, message: "Unauthorized" });
   }
 
-  const { productId } = req.params;
+  const id = req.params.id;
 
   const product = req.body;
 
-  if (!mongoose.Types.ObjectId.isValid(productId)) {
+  if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({ success: false, message: "Product not found" });
   }
   
   try {
-    const updatedProduct = await Product.findByIdAndUpdate(productId, product, {
+    const updatedProduct = await Product.findByIdAndUpdate(id, product, {
       new: true,
     });
     res.status(200).json({ success: true, data: updatedProduct });
@@ -67,22 +74,22 @@ router.put("/:productId", async (req, res) => {
   }
 });
 
-router.delete("/:productId", async (req, res) => {
-  if (isAdminOrEditor(req.session.user)) {
+router.delete("/:id", async (req, res) => {
+  if (!isAdminOrEditor(req.session.user)) {
     return res.status(401).json({ success: false, message: "Unauthorized" });
   }
 
-  const { productId } = req.params;
+  const id = req.params;
 
   // check if the product id is valid
-  if (!mongoose.Types.ObjectId.isValid(productId)) {
+  if (!mongoose.Types.ObjectId.isValid(id)) {
     return res
       .status(404)
       .json({ success: false, message: "Invalid Product Id" });
   }
 
   try {
-    await Product.findByIdAndDelete(productId);
+    await Product.findByIdAndDelete(id);
     return res.status(200).json({ success: true, message: "Product deleted" });
   } catch (error) {
     console.log("Error in deleting product: ", error.message);
