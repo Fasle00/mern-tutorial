@@ -1,12 +1,15 @@
 const express = require("express");
-//const { createProduct, deleteProduct, getProducts, updateProduct } = require( '../controllers/product.controller.js');
 const Product = require("../models/product.model.js");
 const mongoose = require("mongoose");
-const session = require("express-session");
-const { isAdmin, isEditor, isAdminOrEditor } = require("../validation.js");
+const {
+  isAdmin, 
+  isEditor, 
+  isAdminOrEditor 
+} = require("../validation.js");
 
 const router = express.Router();
 
+// Route to get all products
 router.get("/", async (req, res) => {
   try {
     const products = await Product.find({});
@@ -16,6 +19,8 @@ router.get("/", async (req, res) => {
     res.status(500).json({ success: false, message: "Server error" });
   }
 });
+
+// Route to create a new product
 router.post("/", async (req, res) => {
   if (!isAdminOrEditor(req.session.user)) {
     return res.status(401).json({ success: false, message: "Unauthorized" });
@@ -51,6 +56,7 @@ router.post("/", async (req, res) => {
   }
 });
 
+// Route to update an existing product
 router.put("/:id", async (req, res) => {
   if (!isAdminOrEditor(req.session.user)) {
     return res.status(401).json({ success: false, message: "Unauthorized" });
@@ -74,6 +80,7 @@ router.put("/:id", async (req, res) => {
   }
 });
 
+// Route to delete an existing product
 router.delete("/:id", async (req, res) => {
   if (!isAdminOrEditor(req.session.user)) {
     return res.status(401).json({ success: false, message: "Unauthorized" });

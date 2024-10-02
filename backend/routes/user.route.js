@@ -1,24 +1,25 @@
 const express = require("express");
 const router = express.Router();
-const passport = require("passport");
 const User = require("../models/user.model");
-const Product = require("../models/product.model");
 const mongoose = require("mongoose");
-const session = require("express-session");
 const env = require("dotenv");
 const cartRoutes = require("./cart.route.js");
-env.config();
 const {
   isAdmin,
   isEditor,
-  isAdminOrEditor,
   isUser,
+  isAdminOrEditor,
+  isAdminOrUser,
 } = require("../validation.js");
+
+env.config();
 
 const adminId = "66eac8eb1f04e3e0d2ca9d15";
 
+// ALl cart routes that are in cart.route.js
 router.use("/cart", cartRoutes);
 
+// Route to get all users
 router.get("/", async (req, res) => {
   if (!isAdmin(req.session.user))
     return res.status(401).json({ success: false, message: "Unauthorized" });
@@ -32,22 +33,70 @@ router.get("/", async (req, res) => {
   }
 });
 
+// Route to update a existing user
+router.put("/:id", async (req, res) => {
+  if (!req.session.user)
+    return res.status(401).json({ success: false, message: "no session user" });
+  if (!(req.params.id === req.session.user._id || isAdmin(req.session.user)))
+    return res.status(401).json({ success: false, message: "wrong user" });
 
-router.get("/:id", async (req, res) => {
-  if (!req.session.user) return res.status(401).json({ success: false, message: "no session user" });
-  if (!(req.params.id === req.session.user._id || isAdmin(req.session.user))) return res.status(401).json({ success: false, message: "wrong user" });
-  
-  if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
-    return res
-      .status(404)
-      .json({ success: false, message: "User not found" });
+  const id = req.params.id;
+
+  const user = req.body;
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(404).json({ success: false, message: "User not found" });
   }
-  
+
+  try {
+    const updatedUser = await User.findByIdAndUpdate(id, user, { new: true });
+    res.status(200).json({ success: true, data: updatedUser });
+  } catch (error) {
+    console.log("error in updating user", error.message);
+    res.status(500).json({ success: false, message: "Server error" });
+  }
+});
+
+// Route to delete a existing user
+router.delete("/:id", async (req, res) => {
+  if (!req.session.user)
+    return res.status(401).json({ success: false, message: "no session user" });
+  if (!(req.params.id === req.session.user._id || isAdmin(req.session.user)))
+    return res.status(401).json({ success: false, message: "wrong user" });
+
+  const id = req.params.id;
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(404).json({ success: false, message: "User not found" });
+  }
+
+  try {
+    await User.findByIdAndDelete(id);
+    res.status(200).json({ success: true, message: "User deleted" });
+  } catch (error) {
+    console.log("error in deleting user", error.message);
+    res.status(500).json({ success: false, message: "Server error" });
+  }
+});
+
+// Route to get a specific user by it's ID
+router.get("/:id", async (req, res) => {
+  if (!req.session.user)
+    return res.status(401).json({ success: false, message: "no session user" });
+  if (!(req.params.id === req.session.user._id || isAdmin(req.session.user)))
+    return res.status(401).json({ success: false, message: "wrong user" });
+
+  if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+    return res.status(404).json({ success: false, message: "User not found" });
+  }
+
   try {
     const user = await User.findById(req.params.id);
     if (!req.params.id === user._id) {
       if (!isAdmin(req.session.user))
-        return res.status(401).json({ success: false, message: "Unauthorized" });
+        return res
+          .status(401)
+          .json({ success: false, message: "Unauthorized" });
     }
     res.status(200).json({ success: true, data: user });
   } catch (error) {

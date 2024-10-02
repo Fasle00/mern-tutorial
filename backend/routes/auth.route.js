@@ -2,11 +2,10 @@ const express = require("express");
 const router = express.Router();
 const passport = require("passport");
 const User = require("../models/user.model");
-const mongoose = require("mongoose");
-const session = require("express-session");
 
 const CLIENT_URL = "http://localhost:5000/";
 
+// Callback route for a successful login 
 router.get("/login/success", async (req, res) => {
   if (req.user) {
     const foundUser = await User.findOne({ googleId: req.user.id });
@@ -45,6 +44,7 @@ router.get("/login/success", async (req, res) => {
   }
 });
 
+// Route to handle a failed login
 router.get("/login/failed", (req, res) => {
   res.status(401).json({
     success: false,
@@ -52,17 +52,20 @@ router.get("/login/failed", (req, res) => {
   });
 });
 
+// Route to logout
 router.get("/logout", (req, res) => {
   req.session.user = null;
   req.logout();
   res.redirect(CLIENT_URL);
 });
 
+// Route to authenticate with Google
 router.get(
   "/google",
   passport.authenticate("google", { scope: ["profile", "email"] })
 );
 
+// Callback route for Google to redirect to
 router.get(
   "/google/callback",
   passport.authenticate("google", {

@@ -41,8 +41,8 @@ app.use("/auth", authRoutes);
 app.use("/api/users", userRoutes);
 
 const dirname = path.resolve();
-console.log("dirname: ", dirname);
 
+// Serve static assets if in production
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(dirname, "/frontend/dist")));
 
