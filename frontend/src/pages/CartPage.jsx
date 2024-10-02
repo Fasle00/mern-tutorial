@@ -1,26 +1,41 @@
-import { Box, Button, Center, Text, useColorModeValue, VStack, HStack, Heading, Link, Stack, SimpleGrid  } from "@chakra-ui/react"
+import { Box, Button, Center, Text, useColorModeValue, VStack, HStack, Heading, Link, Stack, SimpleGrid, filter  } from "@chakra-ui/react"
 import CartItem from "../components/CartItem"
-
+import { useCartStore } from "../store/cart"
+import { useEffect } from 'react'
+import { useProductStore } from "../store/product"
+import { filterProps } from "framer-motion"
 
 const CartPage= () => {
+const {fetchCarts, carts } = useCartStore()
+const {fetchProducts, products } = useProductStore()
+useEffect(() => {
+    fetchCarts();
+}, [fetchCarts])
+useEffect(() => {
+    fetchProducts();
+}, [fetchProducts])
 
-const cart = [{
-    _id:CartPage.ItemId, 
-    color:CartPage.ItemColor, 
-    size:CartPage.ItemSize, 
-    quantity:CartPage.ItemQuantity
-},{
-    _id:CartPage.ItemId, 
-    color:CartPage.ItemColor, 
-    size:CartPage.ItemSize, 
-    quantity:CartPage.ItemQuantity
-}]
+ for(let i = 0; i < products.length; i++) {
+    for (let j = 0; j < carts.length; j++){
+        if (carts[j]._id===products[i]){
+filteredProduct.push({_id:products[i]._id,
+                      color:products[i].color,  
+                    size:products[i].size,
+                    quantity:products[i].quantity
+})
+        }
+    }
+ }
 
     return(
-    
-    <Box bg={useColorModeValue("gray.800", "gray.800")} w="80%" p={"3rem"} marginTop={"3rem"}marginLeft={"10%"}  > 
-    <Box bg={useColorModeValue("gray.600", "gray.600")} w="80%" p={"1rem"} marginLeft={"10%"}>
         
+       
+
+    <Box bg={useColorModeValue("gray.800", "gray.800")} w="80%" p={"3rem"} marginTop={"3rem"}marginLeft={"10%"}  > 
+   
+    <Box bg={useColorModeValue("gray.600", "gray.600")} w="80%" p={"1rem"} marginLeft={"10%"}>
+         
+       
     <VStack>
 <Text> Min varukorg</Text>
 
@@ -30,9 +45,12 @@ const cart = [{
 <Box bg={useColorModeValue("gray.600", "gray.600")} w="80%" p={"2rem"} marginTop={"2rem"} marginLeft={"10%"} >
 
 <VStack>
+
+    {carts.map((cart) => (
+            <CartItem key={cart._id} cart={cart}  />
+        ))},
+
     
-    <CartItem> </CartItem>
-    <CartItem> </CartItem>
 </VStack>
 
 

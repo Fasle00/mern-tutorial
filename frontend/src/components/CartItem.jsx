@@ -1,5 +1,5 @@
-import { useProductStore } from '../store/product'
 import { useState } from "react";
+import { useCartStore } from '../store/cart';
 import { 
     Text, 
     Button, 
@@ -9,16 +9,72 @@ import {
     InputGroup, 
     VStack, 
     HStack, 
+    useColorModeValue,
+    useToast,
+    useDisclosure,
+    IconButton
+    
 } from '@chakra-ui/react';
+import  {DeleteIcon} from "@chakra-ui/icons"
+const CartItem = ({ cart }) => {
+    const [updatedCart, setUpdatedCart] = useState(cart);
 
-const CartItem = ({ product }) => {
+   
+    const { deleteCartItem, updateCartItem } = useCartStore();
+    const toast = useToast();
+    const { isOpen, onOpen, onClose } = useDisclosure();
+
+   
 
 
-    const [updatedProduct, setUpdatedProduct] = useState(product);
-    const ItemId = "Id"
-    const ItemColor = "Röd"
-    const ItemQuantity = 2
-    const ItemSize = "M"
+
+   
+    
+    const handleDeleteCart = async () => {
+        const { success, message } = await deleteCartItem();
+        if (!success) {
+            toast({
+                title: "Error",
+                description: message,
+                status: "error",
+                duration: 3000,
+                isClosable: true,
+            });
+        } else {
+            toast({
+                title: "Success",
+                description: message,
+                status: "success",
+                duration: 3000,
+                isClosable: true,
+            });
+        }
+    };
+
+    const handleUpdateCart = async ( updatedCart) => {
+        const { success, message } = await updateCartItem( updatedCart);
+        onClose();
+        if (!success) {
+            toast({
+                title: "Error",
+                description: message,
+                status: "error",
+                duration: 3000,
+                isClosable: true,
+            });
+        } else {
+            toast({
+                title: "Success",
+                description: "Product updated successfully",
+                status: "success",
+                duration: 3000,
+                isClosable: true,
+            });
+        }
+    };
+
+    
+
 
     return (
         <Box bg={"bg"}   >
@@ -27,12 +83,13 @@ const CartItem = ({ product }) => {
 
                 <VStack >
 
-                    <Text >{ItemId}</Text>
-                    <Text> {ItemColor}</Text>
-                    <Text>{ItemSize}</Text>
-                    <Text>{ItemQuantity}</Text>
 
-                    <Button colorScheme='red'> Ta bort produkt</Button>
+<Text> {cart.color}</Text>
+<Text> {cart.size}</Text>
+<Text> {cart.amount}</Text>
+                    <Text > a</Text>
+                   
+                    <IconButton icon={<DeleteIcon />} onClick={() => handleDeleteCart(cart._id)} colorScheme="red" />
                 </VStack>
             </HStack>
         </Box>
