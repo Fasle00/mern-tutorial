@@ -4,7 +4,7 @@ export const useCartStore = create((set) => ({
   carts: [],
   setCarts: (cart) => set({ carts }),
   createCart: async (newCart) => {
-    if (!newCart.id || !newCart.color || !newCart.size || !newCart.quantity) {
+    if (!newCart._id || !newCart.color || !newCart.size || !newCart.amount) {
       return { success: false, message: "Please fill in all fields." };
     }
     const res = await fetch("/api/users/cart", {

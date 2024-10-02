@@ -158,7 +158,7 @@ const ProductDetails = ({ product }) => {
 
             <Box boxSize={'250px'} p={3}>
                 <HStack spacing={4} bg={bg}>
-                    <Button /* onClick={handleAddToCart} */>
+                    <Button>
                         <Text>
                             Lägg till i varukorgen
                         </Text>

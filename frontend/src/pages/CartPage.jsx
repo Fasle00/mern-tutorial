@@ -21,7 +21,7 @@ useEffect(() => {
 filteredProduct.push({_id:products[i]._id,
                       color:products[i].color,  
                     size:products[i].size,
-                    quantity:products[i].quantity
+                    amount:products[i].amount
 })
         }
     }
