@@ -118,6 +118,16 @@ const Navbar = ({ user, setUser }) => {
                                     </MenuItem>
 
                                     <MenuItem>
+                                    <Link to={"/cart"}>
+                                    <Button w={"full"} bg={"bg"} variant={'link'}>
+                                        <MenuItem textColor={useColorModeValue("black","white")}>
+                                        Cart
+                                        </MenuItem>
+                                    </Button>
+                                    </Link>
+                                    </MenuItem>
+
+                                    <MenuItem>
                                     <Link to={"/create"}>
                                         <Button w={"full"} bg={"bg"} variant={'link'}>
                                             <MenuItem textColor={useColorModeValue("black","white")}>
