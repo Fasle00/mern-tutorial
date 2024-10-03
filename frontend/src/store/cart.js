@@ -4,9 +4,11 @@ export const useCartStore = create((set) => ({
   carts: [],
   setCarts: (cart) => set({ carts }),
   createCart: async (newCart) => {
+    debugger
     if (!newCart._id || !newCart.color || !newCart.size || !newCart.amount) {
       return { success: false, message: "Please fill in all fields." };
     }
+    
     const res = await fetch("/api/users/cart", {
       method: "POST",
       headers: {
