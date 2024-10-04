@@ -2,7 +2,7 @@ import { create } from "zustand";
 
 export const useUserStore = create((set) => ({
   users: [],
-  setUsers: (user) => set({ users }),
+  setUsers: (user) => set({ user }),
   fetchUsers: async () => {
     const res = await fetch("/api/users");
     const data = await res.json();

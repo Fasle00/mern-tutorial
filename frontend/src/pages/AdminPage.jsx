@@ -25,7 +25,7 @@ import { useEffect, useState } from 'react'
 import { useUserStore } from '../store/user'
 
 const AdminPage = () => {
-    const { fetchUsers, users, setUsers } = useUserStore();
+    const { fetchUsers, users, setUsers, updateUsers } = useUserStore();
     const toast = useToast();
 
     useEffect(() => {
@@ -39,8 +39,6 @@ const AdminPage = () => {
     const [updatedUsers, setUpdatedUsers] = useState({
         accessLevel: "",
     });
-
-    const { updateUsers } = useUserStore();
 
 
     const handleUpdateUser = async (pid) => {
