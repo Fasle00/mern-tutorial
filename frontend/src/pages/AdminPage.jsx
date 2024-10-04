@@ -55,26 +55,6 @@ const AdminPage = () => {
         console.log("updatedUsers", updatedUsers);
         setUsers(updatedUsers);
         updateUsers(pid, accessLevel);
-
-        const { success, message } = await updateUsers(updatedUsers);
-
-        if (!success) {
-            toast({
-                title: "Error",
-                description: message,
-                status: "error",
-                duration: 3000,
-                isClosable: true,
-            });
-        } else {
-            toast({
-                title: "Success",
-                description: "Access level updated successfully",
-                status: "success",
-                duration: 3000,
-                isClosable: true,
-            });
-        }
     };
 
     return (
@@ -156,8 +136,6 @@ const AdminPage = () => {
                                 </Tfoot>
                             </Table>
                         </TableContainer>
-
-                        <Button onClick={() => handleUpdateUser()}>submit</Button>
                     </VStack>
                 </TabPanel>
                 <TabPanel>
