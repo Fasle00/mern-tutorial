@@ -7,6 +7,14 @@ import {
     TabPanels,
     TabPanel,
     Heading,
+    Menu,
+    MenuButton,
+    MenuList,
+    MenuItem,
+    MenuItemOption,
+    MenuGroup,
+    MenuOptionGroup,
+    MenuDivider,
     TableContainer,
     Table,
     TableCaption,
@@ -36,15 +44,17 @@ const AdminPage = () => {
         console.log("users har updaterats till:", users);
     }, [users]);
 
-    const [updatedUsers, setUpdatedUsers] = useState({
+    const [updatedUsers, setUpdatedUsers,] = useState({
         accessLevel: "",
     });
 
 
-    const handleUpdateUser = async (pid) => {
+    const handleUpdateUser = async (pid, accessLevel) => {
+        /*  pid = selectedUserID; */
+        console.log("pid:", pid);
         console.log("updatedUsers", updatedUsers);
         setUsers(updatedUsers);
-        updateUsers(pid, updatedUsers);
+        updateUsers(pid, accessLevel);
 
         const { success, message } = await updateUsers(updatedUsers);
 
@@ -98,8 +108,12 @@ const AdminPage = () => {
                                             <Td>{user.email}</Td>
                                             <Td>
                                                 <Select variant='unstyled' onChange={(e) => {
+                                                    console.log("e.target.value", e.target.value);
+                                                    console.log("user._id", user._id);
+                                                    handleUpdateUser(user._id, e.target.value);
                                                     const updatedUser = { ...user, accessLevel: e.target.value };
                                                     let updateUserList = [];
+                                                    let selectedUserID = user._id;
                                                     users.map((user) => {
                                                         if (user.displayName === updatedUser.displayName) {
                                                             updateUserList.push(updatedUser);
@@ -142,6 +156,7 @@ const AdminPage = () => {
                                 </Tfoot>
                             </Table>
                         </TableContainer>
+
                         <Button onClick={() => handleUpdateUser()}>submit</Button>
                     </VStack>
                 </TabPanel>

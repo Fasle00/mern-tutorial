@@ -11,15 +11,15 @@ export const useUserStore = create((set) => ({
     set({ users: data.data });
     
   },
-  updateUsers: async (pid, updatedUser) => {
-    
+  updateUsers: async (pid, accessLevel) => {
+    console.log("pid", pid);
 
     const res = await fetch(`/api/users/${pid}`, {
         method: "PUT",
         headers: {
             "Content-Type": "application/json",
         },
-        body: JSON.stringify(updatedUser),
+        body: JSON.stringify({ accessLevel: accessLevel }),
     });
     const data = await res.json();
     if (!data.success) return { success: false, message: data.message };
