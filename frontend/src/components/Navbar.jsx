@@ -145,7 +145,8 @@ const Navbar = ({ user, setUser }) => {
                                         </Link>
                                     </MenuItem>
 
-                                    <MenuItem>
+                                    {(user.accessLevel == "admin" || user.accessLevel == "editor") && (
+                                        <MenuItem>
                                         <Link to={"/create"}>
                                             <Button w={"full"} bg={"bg"} variant={'link'}>
                                                 <MenuItem textColor={useColorModeValue("black", "white")}>
@@ -154,6 +155,7 @@ const Navbar = ({ user, setUser }) => {
                                             </Button>
                                         </Link>
                                     </MenuItem>
+                                    )}
 
                                     <MenuItem>
                                         <Button w={"full"} bg={"bg"} variant={'link'}>
