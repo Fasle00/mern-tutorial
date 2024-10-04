@@ -7,6 +7,14 @@ import {
     TabPanels,
     TabPanel,
     Heading,
+    Menu,
+    MenuButton,
+    MenuList,
+    MenuItem,
+    MenuItemOption,
+    MenuGroup,
+    MenuOptionGroup,
+    MenuDivider,
     TableContainer,
     Table,
     TableCaption,
@@ -17,6 +25,7 @@ import {
     Td,
     Tfoot,
     useColorModeValue,
+    useToast,
     Select,
     Button
 } from '@chakra-ui/react'
@@ -24,26 +33,34 @@ import { useEffect, useState } from 'react'
 import { useUserStore } from '../store/user'
 
 const AdminPage = () => {
-    const { fetchUsers, users } = useUserStore();
+    const { fetchUsers, users, setUsers, updateUsers } = useUserStore();
+    const toast = useToast();
 
     useEffect(() => {
         fetchUsers()
     }, [fetchUsers]);
-        
-    const [updatedUsers, setUpdatedUsers] = useState(users);
-    
-    console.log("users", users);
 
-    const handleUpdateUser = async () => {
-        console.log("handleUpdateUsers");
-        console.log("Updated users:", updatedUsers);
+    useEffect(() => {
+        console.log("users har updaterats till:", users);
+    }, [users]);
+
+    const [updatedUsers, setUpdatedUsers,] = useState({
+        accessLevel: "",
+    });
+
+
+    const handleUpdateUser = async (pid, accessLevel) => {
+        /*  pid = selectedUserID; */
+        console.log("pid:", pid);
+        console.log("updatedUsers", updatedUsers);
+        setUsers(updatedUsers);
+        updateUsers(pid, accessLevel);
     };
-
 
     return (
 
         <Tabs orientation="vertical">
-            <TabList >
+            <TabList>
                 <Tab>Users</Tab>
                 <Tab>Products</Tab>
             </TabList>
@@ -51,7 +68,7 @@ const AdminPage = () => {
             <TabPanels>
                 <TabPanel>
                     <VStack>
-                        <Heading as='h1' >Users</Heading>
+                        <Heading as='h1'> Users </Heading>
 
                         <TableContainer w={"full"} bg={useColorModeValue("white", "gray.800")} p={6} rounded={"lg"} shadow={"md"} >
                             <Table variant='striped' colorScheme='red'>
@@ -71,8 +88,12 @@ const AdminPage = () => {
                                             <Td>{user.email}</Td>
                                             <Td>
                                                 <Select variant='unstyled' onChange={(e) => {
+                                                    console.log("e.target.value", e.target.value);
+                                                    console.log("user._id", user._id);
+                                                    handleUpdateUser(user._id, e.target.value);
                                                     const updatedUser = { ...user, accessLevel: e.target.value };
                                                     let updateUserList = [];
+                                                    let selectedUserID = user._id;
                                                     users.map((user) => {
                                                         if (user.displayName === updatedUser.displayName) {
                                                             updateUserList.push(updatedUser);
@@ -115,7 +136,6 @@ const AdminPage = () => {
                                 </Tfoot>
                             </Table>
                         </TableContainer>
-                        <Button onClick={() => handleUpdateUser()}>submit</Button>
                     </VStack>
                 </TabPanel>
                 <TabPanel>
