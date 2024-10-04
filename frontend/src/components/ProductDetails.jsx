@@ -18,17 +18,21 @@ import {
     NumberInputStepper,
     NumberIncrementStepper,
     NumberDecrementStepper,
+    Breadcrumb,
+    BreadcrumbItem,
+    BreadcrumbLink,
+    BreadcrumbSeparator,
 } from "@chakra-ui/react";
 import { MdOutlineAddShoppingCart } from "react-icons/md";
 import { useState } from "react";
+import { useCartStore } from "../store/cart";
 
 
 
-
-const ProductDetails = ({ product }) => {
-    const textColor = useColorModeValue("gray.600", "gray.200");
-    const bg = useColorModeValue("white", "gray.800");
-
+const ProductDetails = ({ product, cart }) => {
+    const textColor = "white";
+    const bg = useColorModeValue("#3A3A3A", "#3A3A3A");
+    const { createCart } = useCartStore
     function CustomRadio(props) {
         const { image, ...radioProps } = props
         const { state, getInputProps, getRadioProps, htmlProps, getLabelProps } =
@@ -92,33 +96,50 @@ const ProductDetails = ({ product }) => {
         <Box
             overflow='hidden'
             bg={bg}
-            p={35}
+            p={"3%"}
+            style={{ fontFamily: 'Lora' }}
+            maxWidth={500}
         >
-            <HStack>
+            <HStack >
                 <VStack align="start">
-                    <Heading as='h1' size="3xl" color={textColor}>
+                    <Heading as='h1' size="3xl" color={textColor} style={{ fontFamily: 'Lora' }}>
                         {product.name}
                     </Heading>
                 </VStack>
             </HStack>
 
-            <HStack>
+            <HStack paddingTop={"5%"} align={"top"} spacing={3}>
                 <Image
+
                     boxSize='200px'
                     fit='cover'
                     src={imageColor}
                 />
+
+                <VStack>
+                    <Text color={textColor} fontSize={'4xl'}>
+                        Pris: {product.price}:-
+                    </Text>
+                    <Text w={"100%"} wordBreak={"keep-all"}>
+                        {product.description}
+                    </Text>
+
+                </VStack>
             </HStack>
 
-            <Text color={textColor} fontSize={'4xl'} p={3}>
-                Pris: {product.price}:-
-            </Text>
+
+
+
+
+
+
 
             <HStack p={3}>
                 <Text>
                     Färg:
                 </Text>
                 <Stack {...getRootProps()}>
+                    {/* <Text>The selected radio is: {value}</Text> */}
                     <HStack>
                         {colors.map((colors) => {
                             return (
@@ -133,6 +154,9 @@ const ProductDetails = ({ product }) => {
                 </Stack>
             </HStack>
 
+
+
+
             <HStack>
                 <Select>
                     <option value='XS'>XS</option>
@@ -142,6 +166,9 @@ const ProductDetails = ({ product }) => {
                     <option value='XL'>XL</option>
                 </Select>
             </HStack>
+
+
+
 
             <HStack p={3}>
                 <Text>
@@ -156,18 +183,20 @@ const ProductDetails = ({ product }) => {
                 </NumberInput>
             </HStack>
 
-            <Box boxSize={'250px'} p={3}>
+
+
+            <Box boxSize={'250px'} p={0}>
                 <HStack spacing={4} bg={bg}>
-                    <Button /* onClick={handleAddToCart} */>
+
+                    
+                    <Button onClick={() => createCart[cart._id, cart.color, cart.size, cart.amount]}>
                         <Text>
                             Lägg till i varukorgen
                         </Text>
                         <MdOutlineAddShoppingCart size={'28px'} />
                     </Button>
                 </HStack>
-                <Text p={4} w={'full'}>
-                    {product.description}
-                </Text>
+
             </Box>
 
         </Box >

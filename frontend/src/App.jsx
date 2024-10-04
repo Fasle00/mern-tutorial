@@ -56,7 +56,7 @@ function App() {
         <Route path="/create" element={ user ? <CreatePage/> : <Navigate to="/login" />} />
         <Route path="/users" element={ user && user.accessLevel==="admin" ? <AdminPage /> : <Navigate to="/login" />}/>
         <Route path="/cart" element={<CartPage/>}/>
-        <Route path="/products/:id" element={<ViewProductPage />} />
+        <Route path="/product/:id" element={<ViewProductPage />} />
         <Route path="/:id" element={<SelectionPage />} />
         <Route path="/:id/:id" element={<SelectionPage />} />
       </Routes>

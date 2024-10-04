@@ -21,7 +21,7 @@ useEffect(() => {
 filteredProduct.push({_id:products[i]._id,
                       color:products[i].color,  
                     size:products[i].size,
-                    quantity:products[i].quantity
+                    amount:products[i].amount
 })
         }
     }
@@ -31,9 +31,9 @@ filteredProduct.push({_id:products[i]._id,
         
        
 
-    <Box bg={useColorModeValue("gray.800", "gray.800")} w="80%" p={"3rem"} marginTop={"3rem"}marginLeft={"10%"}  > 
+    <Box bg={"#3A3A3A"} w="35%"  p={3} margin={"auto"} marginTop={"2%"} style={{ fontFamily: 'Lora' }}> 
    
-    <Box bg={useColorModeValue("gray.600", "gray.600")} w="80%" p={"1rem"} marginLeft={"10%"}>
+    <Box bg={useColorModeValue("gray.600", "gray.600")} w="90%" p={"1%"} margin={"auto"} marginTop={"2%"}>
          
        
     <VStack>
@@ -42,7 +42,7 @@ filteredProduct.push({_id:products[i]._id,
 </VStack>
 </Box>
 
-<Box bg={useColorModeValue("gray.600", "gray.600")} w="80%" p={"2rem"} marginTop={"2rem"} marginLeft={"10%"} >
+<Box bg={useColorModeValue("gray.600", "gray.600")} w="90%" minH={100}  p={"1%"} margin={"auto"} marginTop={"2%"}>
 
 <VStack>
 
@@ -58,8 +58,8 @@ filteredProduct.push({_id:products[i]._id,
 
 </Box>
 
-<Box bg={useColorModeValue("gray.600", "gray.600")} w="80%" p={"2rem"} marginTop={"2rem"} marginLeft={"10%"}>
-    <VStack spacing={"2rem"}>
+<Box bg={useColorModeValue("gray.600", "gray.600")} w="90%" p={"1%"} margin={"auto"} marginTop={"2%"}>
+    <VStack spacing={"2%"}>
 <Text>Summa att betala:</Text>
 <Button>Betala</Button>
 </VStack>
