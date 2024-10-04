@@ -17,6 +17,7 @@ import {
     Td,
     Tfoot,
     useColorModeValue,
+    useToast,
     Select,
     Button
 } from '@chakra-ui/react'
@@ -24,26 +25,54 @@ import { useEffect, useState } from 'react'
 import { useUserStore } from '../store/user'
 
 const AdminPage = () => {
-    const { fetchUsers, users } = useUserStore();
+    const { fetchUsers, users, setUsers } = useUserStore();
+    const toast = useToast();
 
     useEffect(() => {
         fetchUsers()
     }, [fetchUsers]);
-        
-    const [updatedUsers, setUpdatedUsers] = useState(users);
-    
-    console.log("users", users);
 
-    const handleUpdateUser = async () => {
-        console.log("handleUpdateUsers");
-        console.log("Updated users:", updatedUsers);
+    useEffect(() => {
+        console.log("users har updaterats till:", users);
+    }, [users]);
+
+    const [updatedUsers, setUpdatedUsers] = useState({
+        accessLevel: "",
+    });
+
+    const { updateUsers } = useUserStore();
+
+
+    const handleUpdateUser = async (pid) => {
+        console.log("updatedUsers", updatedUsers);
+        setUsers(updatedUsers);
+        updateUsers(pid, updatedUsers);
+
+        const { success, message } = await updateUsers(updatedUsers);
+
+        if (!success) {
+            toast({
+                title: "Error",
+                description: message,
+                status: "error",
+                duration: 3000,
+                isClosable: true,
+            });
+        } else {
+            toast({
+                title: "Success",
+                description: "Access level updated successfully",
+                status: "success",
+                duration: 3000,
+                isClosable: true,
+            });
+        }
     };
-
 
     return (
 
         <Tabs orientation="vertical">
-            <TabList >
+            <TabList>
                 <Tab>Users</Tab>
                 <Tab>Products</Tab>
             </TabList>
@@ -51,7 +80,7 @@ const AdminPage = () => {
             <TabPanels>
                 <TabPanel>
                     <VStack>
-                        <Heading as='h1' >Users</Heading>
+                        <Heading as='h1'> Users </Heading>
 
                         <TableContainer w={"full"} bg={useColorModeValue("white", "gray.800")} p={6} rounded={"lg"} shadow={"md"} >
                             <Table variant='striped' colorScheme='red'>
