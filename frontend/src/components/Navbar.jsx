@@ -17,6 +17,9 @@ const Navbar = ({ user, setUser }) => {
         window.open("http://localhost:5000/auth/logout", "_self");
     };
     const { isOpen, onOpen, onClose } = useDisclosure();
+    
+
+
 
     return (
         <Container maxW={"full"} px={4} bg={useColorModeValue("#3A3A3A", "#3A3A3A")} style={{ fontFamily: 'Lora' }}>
@@ -45,6 +48,7 @@ const Navbar = ({ user, setUser }) => {
 
                     </Text>
                     <GiShirtButton color="#79CFFF" size={35} />
+
 
 
                     <Text
@@ -102,10 +106,10 @@ const Navbar = ({ user, setUser }) => {
                     <Menu>
 
 
-                        <MenuButton as={Button} rightIcon={<HamburgerIcon color={"white"}/>} variant={'link'} fontSize={"xx-large"} >
+                        <MenuButton as={Button} rightIcon={<HamburgerIcon color={"white"} />} variant={'link'} fontSize={"xx-large"} >
 
                         </MenuButton>
-                        <MenuList textColor={useColorModeValue("black","white")}>
+                        <MenuList textColor={useColorModeValue("black", "white")}>
                             {user ? (
                                 <>
 
@@ -117,29 +121,43 @@ const Navbar = ({ user, setUser }) => {
                                         </MenuItem>
                                     </MenuItem>
 
-                                    <MenuItem>
-                                    <Link to={"/cart"}>
-                                    <Button w={"full"} bg={"bg"} variant={'link'}>
-                                        <MenuItem textColor={useColorModeValue("black","white")}>
-                                        Cart
-                                        </MenuItem>
-                                    </Button>
-                                    </Link>
-                                    </MenuItem>
-
-                                    <MenuItem>
-                                    <Link to={"/create"}>
-                                        <Button w={"full"} bg={"bg"} variant={'link'}>
-                                            <MenuItem textColor={useColorModeValue("black","white")}>
-                                                Create
+                                    {user.accessLevel == "admin" && (
+                                        <>
+                                            <MenuItem>
+                                                <Link to={"/admin"}>
+                                                    <Button w={"full"} bg={"bg"} variant={'link'}>
+                                                        <MenuItem textColor={useColorModeValue("black", "white")}>
+                                                            Admin Page
+                                                        </MenuItem>
+                                                    </Button>
+                                                </Link>
                                             </MenuItem>
-                                        </Button>
-                                    </Link>
+                                        </>
+                                    )}
+
+                                    <MenuItem>
+                                        <Link to={"/cart"}>
+                                            <Button w={"full"} bg={"bg"} variant={'link'}>
+                                                <MenuItem textColor={useColorModeValue("black", "white")}>
+                                                    Cart
+                                                </MenuItem>
+                                            </Button>
+                                        </Link>
                                     </MenuItem>
 
                                     <MenuItem>
-                                    <Button w={"full"} bg={"bg"} variant={'link'}>
-                                        <MenuItem onClick={logout} textColor={useColorModeValue("black","white")}>Log out</MenuItem>
+                                        <Link to={"/create"}>
+                                            <Button w={"full"} bg={"bg"} variant={'link'}>
+                                                <MenuItem textColor={useColorModeValue("black", "white")}>
+                                                    Create
+                                                </MenuItem>
+                                            </Button>
+                                        </Link>
+                                    </MenuItem>
+
+                                    <MenuItem>
+                                        <Button w={"full"} bg={"bg"} variant={'link'}>
+                                            <MenuItem onClick={logout} textColor={useColorModeValue("black", "white")}>Log out</MenuItem>
                                         </Button>
                                     </MenuItem>
 
@@ -148,9 +166,9 @@ const Navbar = ({ user, setUser }) => {
                                 <>
                                     <MenuItem>
                                         <Link to={"/login"}>
-                                            <Button  w={"full"} bg={"bg"} variant={'link'}>
-                                                <MenuItem textColor={useColorModeValue("black","white")}>
-                                                Logga in
+                                            <Button w={"full"} bg={"bg"} variant={'link'}>
+                                                <MenuItem textColor={useColorModeValue("black", "white")}>
+                                                    Logga in
                                                 </MenuItem>
                                             </Button>
                                         </Link>
