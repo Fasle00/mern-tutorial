@@ -1,20 +1,20 @@
 import {
-    Box, 
-    Button, 
-    Card, 
-    Container, 
-    Heading, 
+    Box,
+    Button,
+    Card,
+    Container,
+    Heading,
     HStack,
     VStack,
-    Input, 
-    Stack, 
-    Checkbox, 
+    Input,
+    Stack,
+    Checkbox,
     Radio,
     RadioGroup,
-    Text, 
+    Text,
     useToast,
     useDisclosure,
-    useColorModeValue, 
+    useColorModeValue,
 } from '@chakra-ui/react'
 import { useState } from 'react'
 import { useProductStore } from '../store/product'
@@ -58,15 +58,15 @@ const CreatePage = () => {
                 isClosable: true
             });
         }
-        setNewProduct({ 
-            name: "", 
-            price: "", 
-            imageRed: "", 
-            imageYellow: "", 
-            imageGreen: "", 
-            imageBlue: "", 
-            description: "", 
-            category: "", 
+        setNewProduct({
+            name: "",
+            price: "",
+            imageRed: "",
+            imageYellow: "",
+            imageGreen: "",
+            imageBlue: "",
+            description: "",
+            category: "",
             type: "",
         });
     }

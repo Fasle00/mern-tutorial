@@ -27,8 +27,6 @@ import {
     IconButton,
     Td,
     Tfoot,
-    useColorModeValue,
-    useToast,
     Select,
     Input,
     Image,
@@ -43,7 +41,15 @@ import {
     HStack,
     Container,
     SimpleGrid,
-    Text,
+    Card,
+    Stack, 
+    Checkbox, 
+    Radio,
+    RadioGroup,
+    Text, 
+    useToast,
+    useDisclosure,
+    useColorModeValue, 
 } from '@chakra-ui/react'
 import { useEffect, useState } from 'react'
 import { useUserStore } from '../store/user'
@@ -54,6 +60,10 @@ import AdminProduct from "../components/adminProduct";
 
 const AdminPage = () => {
     const { fetchUsers, users, setUsers, updateUsers } = useUserStore();
+    const { getDisclosureProps, getButtonProps, } = useDisclosure()
+
+    const buttonProps = getButtonProps()
+    const disclosureProps = getDisclosureProps()
     const toast = useToast();
 
 
@@ -100,7 +110,15 @@ const AdminPage = () => {
             <TabPanels>
                 <TabPanel>
                     <VStack>
-                        <Heading as='h1'> Users </Heading>
+                        <Text
+                            fontSize={"30"}
+                            fontWeight={"bold"}
+                            bgClip={"text"}
+                            TextAlign={"center"}
+                        >
+                            Edit acces level of users
+                        </Text>
+                        <Heading as='h1'>  </Heading>
 
                         <TableContainer w={"full"} bg={useColorModeValue("white", "gray.800")} p={6} rounded={"lg"} shadow={"md"} >
                             <Table variant='striped' colorScheme='red'>
@@ -178,7 +196,6 @@ const AdminPage = () => {
                             <Text
                                 fontSize={"30"}
                                 fontWeight={"bold"}
-                                bgGradient={"linear(to-r, cyan.400, blue.500)"}
                                 bgClip={"text"}
                                 TextAlign={"center"}
                             >
