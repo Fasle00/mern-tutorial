@@ -1,3 +1,5 @@
+import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
+
 import {
     Box,
     VStack,
@@ -22,19 +24,38 @@ import {
     Tr,
     Th,
     Tbody,
+    IconButton,
     Td,
     Tfoot,
     useColorModeValue,
     useToast,
     Select,
-    Button
+    Input,
+    Image,
+    Button,
+    Modal,
+    ModalBody,
+    ModalCloseButton,
+    ModalContent,
+    ModalFooter,
+    ModalHeader,
+    ModalOverlay,
+    HStack,
+    Container,
+    SimpleGrid,
+    Text,
 } from '@chakra-ui/react'
 import { useEffect, useState } from 'react'
 import { useUserStore } from '../store/user'
+import { useProductStore } from "../store/product";
+import { Link } from "react-router-dom";
+import AdminProduct from "../components/adminProduct";
+
 
 const AdminPage = () => {
     const { fetchUsers, users, setUsers, updateUsers } = useUserStore();
     const toast = useToast();
+
 
     useEffect(() => {
         fetchUsers()
@@ -56,6 +77,17 @@ const AdminPage = () => {
         setUsers(updatedUsers);
         updateUsers(pid, accessLevel);
     };
+
+
+    // product stuff
+    const { fetchProducts, products } = useProductStore();
+
+    useEffect(() => {
+        fetchProducts();
+    }, [fetchProducts]);
+    console.log("Products:", products);
+
+
 
     return (
 
@@ -139,7 +171,48 @@ const AdminPage = () => {
                     </VStack>
                 </TabPanel>
                 <TabPanel>
-                    product
+                    {/* Product stuff */}
+                    <Container maxW={'container.xl'} py={12}>
+                        <VStack spacing={8}>
+
+                            <Text
+                                fontSize={"30"}
+                                fontWeight={"bold"}
+                                bgGradient={"linear(to-r, cyan.400, blue.500)"}
+                                bgClip={"text"}
+                                TextAlign={"center"}
+                            >
+                                Edit and Delete Products
+                            </Text>
+
+                            <SimpleGrid
+                                columns={{
+                                    base: 1,
+                                    md: 2,
+                                    lg: 3,
+                                }}
+                                spacing={10}
+                                w={"full"}
+                            >
+                                {products.map((product) => (
+                                    <AdminProduct key={product._id} product={product} />
+                                ))}
+                            </SimpleGrid>
+
+                            {products.length === 0 && (
+                                <Text fontSize='xl' TextAlign={"center"} fontWeight='bold' color='gray.500'>
+                                    No products available{" "}
+                                    <Link to={"/create"}>
+                                        <Text as='span' color='blue.500' _hover={{ textDecoration: "underline" }}>
+                                            Create a product
+                                        </Text>
+                                    </Link>
+                                </Text>
+                            )}
+
+                        </VStack>
+                    </Container>
+
                 </TabPanel>
             </TabPanels>
         </Tabs>
