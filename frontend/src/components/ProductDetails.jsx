@@ -25,6 +25,7 @@ import {
 } from "@chakra-ui/react";
 import { MdOutlineAddShoppingCart } from "react-icons/md";
 import { useState } from "react";
+import { useCartStore } from "../store/cart";
 
 
 
@@ -66,18 +67,26 @@ const ProductDetails = ({ product }) => {
     const handleChange = (value) => {
         console.log("value har ändrats till:", value)
 
-
-        if (value == 'röd') {
-            setImageColor(product.imageRed)
-
-        } else if (value == 'grön') {
-            setImageColor(product.imageGreen);
-
-        } else if (value == 'blå') {
-            setImageColor(product.imageBlue);
-
-        } else if (value == 'gul') {
-            setImageColor(product.imageYellow);
+        switch (value) {
+            case 'röd':
+                setImageColor(product.imageRed);
+                setCartItem({ ...cartItem, color: 'röd' });
+                break;
+            case 'grön':
+                setImageColor(product.imageGreen);
+                setCartItem({ ...cartItem, color: 'grön' });
+                break;
+            case 'blå':
+                setImageColor(product.imageBlue);
+                setCartItem({ ...cartItem, color: 'blå' });
+                break;
+            case 'gul':
+                setImageColor(product.imageYellow);
+                setCartItem({ ...cartItem, color: 'gul' });
+                break;
+            default:
+                setImageColor(product.imageRed);
+                setCartItem({ ...cartItem, color: 'röd' });
         }
     }
 
@@ -88,9 +97,29 @@ const ProductDetails = ({ product }) => {
 
     const toast = useToast();
 
-    let selectedColor = value;
-    console.log("selected color:", selectedColor)
+    const [ cartItem, setCartItem ] = useState({
+        _id: product._id,
+        amount: "1",
+        color: "röd",
+        size: "xs",
+    });
 
+    if (cartItem.size === "" && product.sizes) {
+        setCartItem({...cartItem, size: product.sizes[0]});
+    } 
+
+    const { createCart } = useCartStore();
+
+    const handleAddToCart = () => {
+        console.log("Lägger till i varukorgen:", cartItem);
+        //const { success, message } = createCart(cartItem);
+        toast({
+            title: "Produkten har lagts till i varukorgen",
+            status: "success",
+            duration: 9000,
+            isClosable: true,
+        })
+    }
 
     return (
         <Box
@@ -100,6 +129,7 @@ const ProductDetails = ({ product }) => {
             style={{ fontFamily: 'Lora' }}
             maxWidth={500}
         >
+            {/* Name */}
             <HStack >
                 <VStack align="start">
                     <Heading as='h1' size="3xl" color={textColor} style={{ fontFamily: 'Lora' }}>
@@ -108,6 +138,7 @@ const ProductDetails = ({ product }) => {
                 </VStack>
             </HStack>
 
+            {/* Image and decription */}
             <HStack paddingTop={"5%"} align={"top"} spacing={3}>
                 <Image
 
@@ -127,13 +158,7 @@ const ProductDetails = ({ product }) => {
                 </VStack>
             </HStack>
 
-
-
-
-
-
-
-
+            {/* Color buttons */}
             <HStack p={3}>
                 <Text>
                     Färg:
@@ -154,16 +179,9 @@ const ProductDetails = ({ product }) => {
                 </Stack>
             </HStack>
 
-
-
-
             <HStack>
-                <Select>
-                    <option value='XS'>XS</option>
-                    <option value='S'>S</option>
-                    <option value='M'>M</option>
-                    <option value='L'>L</option>
-                    <option value='XL'>XL</option>
+                <Select onChange={(e) => {setCartItem({...cartItem, size: e.target.value})}} >
+                    {product.sizes && product.sizes.map((size) => {return <option key={size} value={size}>{size}</option>})}
                 </Select>
             </HStack>
 
@@ -174,7 +192,7 @@ const ProductDetails = ({ product }) => {
                 <Text>
                     Antal:
                 </Text>
-                <NumberInput defaultValue={1} min={1} max={5}>
+                <NumberInput defaultValue={1} min={1} max={5} onChange={(e) => {setCartItem({...cartItem, amount: e})}}>
                     <NumberInputField />
                     <NumberInputStepper>
                         <NumberIncrementStepper />
@@ -187,7 +205,7 @@ const ProductDetails = ({ product }) => {
 
             <Box boxSize={'250px'} p={0}>
                 <HStack spacing={4} bg={bg}>
-                    <Button /* onClick={handleAddToCart} */>
+                    <Button onClick={handleAddToCart}>
                         <Text>
                             Lägg till i varukorgen
                         </Text>
