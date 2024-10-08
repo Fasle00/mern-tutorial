@@ -35,15 +35,19 @@ router.get("/", async (req, res) => {
 
 // Route to update a existing user
 router.put("/:id", async (req, res) => {
-  if (!req.session.user)
-    return res.status(401).json({ success: false, message: "no session user" });
-  if (!(req.params.id === req.session.user._id || isAdmin(req.session.user)))
-    return res.status(401).json({ success: false, message: "wrong user" });
+  if (!isAdmin(req.session.user)) {
+    if (!req.session.user) 
+      return res.status(401).json({ success: false, message: "no session user" });
+    
+    if (req.params.id === req.session.user._id) 
+      return res.status(401).json({ success: false, message: "wrong user" });
+  }
 
   const id = req.params.id;
 
   const user = req.body;
 
+  // check if the user id is valid
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({ success: false, message: "User not found" });
   }
@@ -59,13 +63,17 @@ router.put("/:id", async (req, res) => {
 
 // Route to delete a existing user
 router.delete("/:id", async (req, res) => {
-  if (!req.session.user)
-    return res.status(401).json({ success: false, message: "no session user" });
-  if (!(req.params.id === req.session.user._id || isAdmin(req.session.user)))
-    return res.status(401).json({ success: false, message: "wrong user" });
+  if (!isAdmin(req.session.user)) {
+    if (!req.session.user) 
+      return res.status(401).json({ success: false, message: "no session user" });
+    
+    if (req.params.id === req.session.user._id) 
+      return res.status(401).json({ success: false, message: "wrong user" });
+  }
 
   const id = req.params.id;
 
+  // check if the user id is valid
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({ success: false, message: "User not found" });
   }
@@ -81,23 +89,23 @@ router.delete("/:id", async (req, res) => {
 
 // Route to get a specific user by it's ID
 router.get("/:id", async (req, res) => {
-  if (!req.session.user)
-    return res.status(401).json({ success: false, message: "no session user" });
-  if (!(req.params.id === req.session.user._id || isAdmin(req.session.user)))
-    return res.status(401).json({ success: false, message: "wrong user" });
+  if (!isAdmin(req.session.user)) {
+    if (!req.session.user) 
+      return res.status(401).json({ success: false, message: "no session user" });
+    
+    if (req.params.id === req.session.user._id) 
+      return res.status(401).json({ success: false, message: "wrong user" });
+  }
 
-  if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+  const id = req.params.id;
+
+  // check if the user id is valid
+  if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({ success: false, message: "User not found" });
   }
 
   try {
-    const user = await User.findById(req.params.id);
-    if (!req.params.id === user._id) {
-      if (!isAdmin(req.session.user))
-        return res
-          .status(401)
-          .json({ success: false, message: "Unauthorized" });
-    }
+    const user = await User.findById(id);
     res.status(200).json({ success: true, data: user });
   } catch (error) {
     console.log("error in fetching user", error.message);

@@ -66,6 +66,7 @@ router.put("/:id", async (req, res) => {
 
   const product = req.body;
 
+  // check if the product id is valid
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({ success: false, message: "Product not found" });
   }
@@ -86,7 +87,7 @@ router.delete("/:id", async (req, res) => {
     return res.status(401).json({ success: false, message: "Unauthorized" });
   }
 
-  const id = req.params;
+  const id = req.params.id;
 
   // check if the product id is valid
   if (!mongoose.Types.ObjectId.isValid(id)) {

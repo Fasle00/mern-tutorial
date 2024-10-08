@@ -29,11 +29,10 @@ import { useCartStore } from "../store/cart";
 
 
 
-
-const ProductDetails = ({ product }) => {
+const ProductDetails = ({ product, cart }) => {
     const textColor = "white";
     const bg = useColorModeValue("#3A3A3A", "#3A3A3A");
-
+    const { createCart } = useCartStore
     function CustomRadio(props) {
         const { image, ...radioProps } = props
         const { state, getInputProps, getRadioProps, htmlProps, getLabelProps } =
@@ -148,12 +147,12 @@ const ProductDetails = ({ product }) => {
                 />
 
                 <VStack>
-                <Text color={textColor} fontSize={'4xl'}>
-                    Pris: {product.price}:-
-                </Text>
-                <Text w={"100%"} wordBreak={"keep-all"}>
-                    {product.description}  
-                </Text>
+                    <Text color={textColor} fontSize={'4xl'}>
+                        Pris: {product.price}:-
+                    </Text>
+                    <Text w={"100%"} wordBreak={"keep-all"}>
+                        {product.description}
+                    </Text>
 
                 </VStack>
             </HStack>
@@ -212,7 +211,6 @@ const ProductDetails = ({ product }) => {
                         <MdOutlineAddShoppingCart size={'28px'} />
                     </Button>
                 </HStack>
-                
             </Box>
 
         </Box >

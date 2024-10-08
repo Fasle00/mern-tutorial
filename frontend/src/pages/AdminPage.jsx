@@ -1,3 +1,5 @@
+import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
+
 import {
     Box,
     VStack,
@@ -7,6 +9,14 @@ import {
     TabPanels,
     TabPanel,
     Heading,
+    Menu,
+    MenuButton,
+    MenuList,
+    MenuItem,
+    MenuItemOption,
+    MenuGroup,
+    MenuOptionGroup,
+    MenuDivider,
     TableContainer,
     Table,
     TableCaption,
@@ -14,36 +24,85 @@ import {
     Tr,
     Th,
     Tbody,
+    IconButton,
     Td,
     Tfoot,
-    useColorModeValue,
     Select,
-    Button
+    Input,
+    Image,
+    Button,
+    Modal,
+    ModalBody,
+    ModalCloseButton,
+    ModalContent,
+    ModalFooter,
+    ModalHeader,
+    ModalOverlay,
+    HStack,
+    Container,
+    SimpleGrid,
+    Card,
+    Stack, 
+    Checkbox, 
+    Radio,
+    RadioGroup,
+    Text, 
+    useToast,
+    useDisclosure,
+    useColorModeValue, 
 } from '@chakra-ui/react'
 import { useEffect, useState } from 'react'
 import { useUserStore } from '../store/user'
+import { useProductStore } from "../store/product";
+import { Link } from "react-router-dom";
+import AdminProduct from "../components/adminProduct";
+
 
 const AdminPage = () => {
-    const { fetchUsers, users } = useUserStore();
+    const { fetchUsers, users, setUsers, updateUsers } = useUserStore();
+    const { getDisclosureProps, getButtonProps, } = useDisclosure()
+
+    const buttonProps = getButtonProps()
+    const disclosureProps = getDisclosureProps()
+    const toast = useToast();
+
 
     useEffect(() => {
         fetchUsers()
     }, [fetchUsers]);
-        
-    const [updatedUsers, setUpdatedUsers] = useState(users);
-    
-    console.log("users", users);
 
-    const handleUpdateUser = async () => {
-        console.log("handleUpdateUsers");
-        console.log("Updated users:", updatedUsers);
+    useEffect(() => {
+        console.log("users har updaterats till:", users);
+    }, [users]);
+
+    const [updatedUsers, setUpdatedUsers,] = useState({
+        accessLevel: "",
+    });
+
+
+    const handleUpdateUser = async (pid, accessLevel) => {
+        /*  pid = selectedUserID; */
+        console.log("pid:", pid);
+        console.log("updatedUsers", updatedUsers);
+        setUsers(updatedUsers);
+        updateUsers(pid, accessLevel);
     };
+
+
+    // product stuff
+    const { fetchProducts, products } = useProductStore();
+
+    useEffect(() => {
+        fetchProducts();
+    }, [fetchProducts]);
+    console.log("Products:", products);
+
 
 
     return (
 
         <Tabs orientation="vertical">
-            <TabList >
+            <TabList>
                 <Tab>Users</Tab>
                 <Tab>Products</Tab>
             </TabList>
@@ -51,7 +110,15 @@ const AdminPage = () => {
             <TabPanels>
                 <TabPanel>
                     <VStack>
-                        <Heading as='h1' >Users</Heading>
+                        <Text
+                            fontSize={"30"}
+                            fontWeight={"bold"}
+                            bgClip={"text"}
+                            TextAlign={"center"}
+                        >
+                            Edit acces level of users
+                        </Text>
+                        <Heading as='h1'>  </Heading>
 
                         <TableContainer w={"full"} bg={useColorModeValue("white", "gray.800")} p={6} rounded={"lg"} shadow={"md"} >
                             <Table variant='striped' colorScheme='red'>
@@ -71,8 +138,12 @@ const AdminPage = () => {
                                             <Td>{user.email}</Td>
                                             <Td>
                                                 <Select variant='unstyled' onChange={(e) => {
+                                                    console.log("e.target.value", e.target.value);
+                                                    console.log("user._id", user._id);
+                                                    handleUpdateUser(user._id, e.target.value);
                                                     const updatedUser = { ...user, accessLevel: e.target.value };
                                                     let updateUserList = [];
+                                                    let selectedUserID = user._id;
                                                     users.map((user) => {
                                                         if (user.displayName === updatedUser.displayName) {
                                                             updateUserList.push(updatedUser);
@@ -115,11 +186,50 @@ const AdminPage = () => {
                                 </Tfoot>
                             </Table>
                         </TableContainer>
-                        <Button onClick={() => handleUpdateUser()}>submit</Button>
                     </VStack>
                 </TabPanel>
                 <TabPanel>
-                    product
+                    {/* Product stuff */}
+                    <Container maxW={'container.xl'} py={12}>
+                        <VStack spacing={8}>
+
+                            <Text
+                                fontSize={"30"}
+                                fontWeight={"bold"}
+                                bgClip={"text"}
+                                TextAlign={"center"}
+                            >
+                                Edit and Delete Products
+                            </Text>
+
+                            <SimpleGrid
+                                columns={{
+                                    base: 1,
+                                    md: 2,
+                                    lg: 3,
+                                }}
+                                spacing={10}
+                                w={"full"}
+                            >
+                                {products.map((product) => (
+                                    <AdminProduct key={product._id} product={product} />
+                                ))}
+                            </SimpleGrid>
+
+                            {products.length === 0 && (
+                                <Text fontSize='xl' TextAlign={"center"} fontWeight='bold' color='gray.500'>
+                                    No products available{" "}
+                                    <Link to={"/create"}>
+                                        <Text as='span' color='blue.500' _hover={{ textDecoration: "underline" }}>
+                                            Create a product
+                                        </Text>
+                                    </Link>
+                                </Text>
+                            )}
+
+                        </VStack>
+                    </Container>
+
                 </TabPanel>
             </TabPanels>
         </Tabs>
