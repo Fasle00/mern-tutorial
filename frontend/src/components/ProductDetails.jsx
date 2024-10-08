@@ -107,7 +107,7 @@ const ProductDetails = ({ product, cart }) => {
         setCartItem({...cartItem, size: product.sizes[0]});
     } 
 
-    const { createCart } = useCartStore();
+   
 
     const handleAddToCart = () => {
         console.log("Lägger till i varukorgen:", cartItem);
