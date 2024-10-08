@@ -66,6 +66,7 @@ router.put("/:id", async (req, res) => {
 
   const product = req.body;
 
+  // check if the product id is valid
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({ success: false, message: "Product not found" });
   }
