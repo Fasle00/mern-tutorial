@@ -22,7 +22,7 @@ router.get("/", async (req, res) => {
   // if (!isAdminOrUser(req.session.user)) return res.status(401).json({ success: false, message: "Unauthorized" });
 
   try {
-    const data = await User.find({ _id: adminId}, "cart");
+    const data = await User.find({ _id: req.session.user._id}, "cart");
     const user = data[0];
 
     res.status(200).json({ success: true, cart: user.cart });
