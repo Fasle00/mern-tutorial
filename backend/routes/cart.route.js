@@ -22,7 +22,7 @@ router.get("/", async (req, res) => {
   // if (!isAdminOrUser(req.session.user)) return res.status(401).json({ success: false, message: "Unauthorized" });
 
   try {
-    const data = await User.find({ _id: req.session.user._id}, "cart");
+    const data = await User.find({ _id: adminId}, "cart");
     const user = data[0];
 
     res.status(200).json({ success: true, cart: user.cart });
@@ -90,6 +90,7 @@ router.delete("/", async (req, res) => {
   // if (!isAdminOrUser(req.session.user)) return res.status(401).json({ success: false, message: "Unauthorized" });
 
   const product = req.body;
+  console.log("product: ", req.body);
   if (!mongoose.Types.ObjectId.isValid(product._id)) {
     return res
       .status(404)
@@ -98,12 +99,19 @@ router.delete("/", async (req, res) => {
 
   try {
     const user = await User.findById(req.session.user._id);
-    user.cart = user.cart.filter(
-      (cartItem) =>
-        cartItem._id !== product._id &&
-        cartItem.size !== product.size &&
-        cartItem.color !== product.color
-    );
+    console.log("user: ", user.cart);
+    let newCart = [];
+    user.cart.map((cartItem) => {
+      if (
+        !(cartItem._id === product._id &&
+        cartItem.size === product.size &&
+        cartItem.color === product.color)
+      ) {
+        newCart.push(cartItem);
+      }
+    });
+    console.log("newCart: ", newCart);
+    user.cart = newCart;
     await user.save();
     res
       .status(200)
@@ -126,7 +134,7 @@ router.put("/", async (req, res) => {
   }
 
   try {
-    const user = await User.findById(req.session.user._id);
+    const user = await User.findById(adminId);
     user.cart = user.cart.map((cartItem) => {
       if (
         cartItem._id === product._id &&
