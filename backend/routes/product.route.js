@@ -87,7 +87,7 @@ router.delete("/:id", async (req, res) => {
     return res.status(401).json({ success: false, message: "Unauthorized" });
   }
 
-  const id = req.params;
+  const id = req.params.id;
 
   // check if the product id is valid
   if (!mongoose.Types.ObjectId.isValid(id)) {
