@@ -15,14 +15,14 @@ const {
 env.config();
 
 const adminId = "66eac8eb1f04e3e0d2ca9d15";
+const noelId = "66fbbcd73a84ed5513a76358";
 
 // Route to get all items in the cart
 router.get("/", async (req, res) => {
-  if (!isAdminOrUser(req.session.user))
-    return res.status(401).json({ success: false, message: "Unauthorized" });
+  // if (!isAdminOrUser(req.session.user)) return res.status(401).json({ success: false, message: "Unauthorized" });
 
   try {
-    const data = await User.find({ _id: req.session.user._id }, "cart");
+    const data = await User.find({ _id: req.session.user._id}, "cart");
     const user = data[0];
 
     res.status(200).json({ success: true, cart: user.cart });
@@ -50,8 +50,7 @@ router.get("/:id", async (req, res) => {
 
 // Route to add a new item to the cart
 router.post("/", async (req, res) => {
-  if (!isUser(req.session.user))
-    return res.status(401).json({ success: false, message: "Unauthorized" });
+  // if (!isUser(req.session.user)) return res.status(401).json({ success: false, message: "Unauthorized" });
 
   const product = req.body;
   if (!mongoose.Types.ObjectId.isValid(product._id)) {
@@ -88,8 +87,7 @@ router.post("/", async (req, res) => {
 
 // Route to delete an item from the cart
 router.delete("/", async (req, res) => {
-  if (!isAdminOrUser(req.session.user))
-    return res.status(401).json({ success: false, message: "Unauthorized" });
+  // if (!isAdminOrUser(req.session.user)) return res.status(401).json({ success: false, message: "Unauthorized" });
 
   const product = req.body;
   if (!mongoose.Types.ObjectId.isValid(product._id)) {
@@ -118,8 +116,7 @@ router.delete("/", async (req, res) => {
 
 // Route to update an item in the cart
 router.put("/", async (req, res) => {
-  if (!isAdminOrUser(req.session.user))
-    return res.status(401).json({ success: false, message: "Unauthorized" });
+  // if (!isAdminOrUser(req.session.user)) return res.status(401).json({ success: false, message: "Unauthorized" });
 
   const product = req.body;
   if (!mongoose.Types.ObjectId.isValid(product._id)) {
