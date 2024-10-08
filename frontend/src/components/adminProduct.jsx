@@ -45,6 +45,8 @@ const AdminProduct = ({ product }) => {
     const { isOpen: isEditOpen, onOpen: onEditOpen, onClose: onEditClose } = useDisclosure()
     const { isOpen: isDeleteOpen, onOpen: onDeleteOpen, onClose: onDeleteClose } = useDisclosure()
 
+
+    // Delete function
     const handleDeleteProduct = async (pid) => {
         const { success, message } = await deleteProduct(pid);
         if (!success) {
@@ -66,7 +68,7 @@ const AdminProduct = ({ product }) => {
         }
     };
 
-
+    // Update function
     const handleUpdateProduct = async (pid, updatedProduct) => {
         const { success, message } = await updateProduct(pid, updatedProduct);
         onEditClose();
@@ -100,7 +102,7 @@ const AdminProduct = ({ product }) => {
             as='a'
         >
 
-            <Image src={product.image} alt={product.name} h={48} w='full' objectFit='cover' href={`/product/${product._id}`} />
+            <Image src={product.imageRed} alt={product.name} h={48} w='full' objectFit='cover' href={`/product/${product._id}`} />
 
             <Box p={4}>
                 <Heading as='h3' size='md' mb={2}>
@@ -131,7 +133,7 @@ const AdminProduct = ({ product }) => {
                         <Input
                             placeholder='Product Name'
                             name='name'
-                            value={updateProduct.name}
+                            value={updatedProduct.name}
                             onChange={(e) => setUpdatedProduct({ ...updatedProduct, name: e.target.value })}
                         />
 
@@ -182,7 +184,13 @@ const AdminProduct = ({ product }) => {
                             onChange={(e) => setUpdatedProduct({ ...updatedProduct, imageYellow: e.target.value })}
                         />
 
-                        <HStack>
+                        {/* Uppdatera category */}
+                        <HStack spacing={"3rem"}
+                            placeholder='Category'
+                            name='category'
+                            value={updateProduct.category}
+                            onChange={(e) => setUpdatedProduct({ ...updatedProduct, category: e.target.value })}
+                        >
                             <RadioGroup>
                                 <Radio value={updateProduct.category = "barn"}> Barn</Radio>
                                 <Radio value={updateProduct.category = "herr"}> Herr</Radio>
@@ -190,7 +198,14 @@ const AdminProduct = ({ product }) => {
                             </RadioGroup>
                         </HStack>
 
-                        <HStack spacing={"3rem"}>
+
+                        {/* Uppdatera type */}
+                        <HStack spacing={"3rem"}
+                            placeholder='Type'
+                            name='type'
+                            value={updateProduct.type}
+                            onChange={(e) => setUpdatedProduct({ ...updatedProduct, type: e.target.value })}
+                        >
                             <RadioGroup>
                                 <Radio value={updateProduct.type = "T-shirt"}> T-shirt</Radio>
                                 <Radio value={updateProduct.type = "Byxor"}> Byxor</Radio>
@@ -199,28 +214,6 @@ const AdminProduct = ({ product }) => {
                                 <Radio value={updateProduct.type = "Skor"}> Skor </Radio>
                             </RadioGroup>
                         </HStack>
-
-                        {/*                         <VStack spacing={4}>
-                            <Input
-                                placeholder='Product Name'
-                                name='name'
-                                value={updatedProduct.name}
-                                onChange={(e) => setUpdatedProduct({ ...updatedProduct, name: e.target.value })}
-                            />
-                            <Input
-                                placeholder='Price'
-                                name='price'
-                                type='number'
-                                value={updatedProduct.price}
-                                onChange={(e) => setUpdatedProduct({ ...updatedProduct, price: e.target.value })}
-                            />
-                            <Input
-                                placeholder='Image URL'
-                                name='image'
-                                value={updatedProduct.image}
-                                onChange={(e) => setUpdatedProduct({ ...updatedProduct, image: e.target.value })}
-                            />
-                        </VStack> */}
                     </ModalBody>
 
                     <ModalFooter>
@@ -238,6 +231,8 @@ const AdminProduct = ({ product }) => {
                 </ModalContent>
             </Modal>
 
+
+            {/* Delete product modal */}
             <Modal isOpen={isDeleteOpen} onClose={onDeleteClose}>
                 <ModalOverlay />
 
@@ -250,13 +245,13 @@ const AdminProduct = ({ product }) => {
 
                     <ModalFooter>
                         <Button
-                            colorScheme='blue'
+                            colorScheme='red'
                             mr={3}
-                            onClick={() => handleDeleteProduct(product._id, updatedProduct)}
+                            onClick={() => handleDeleteProduct(product._id)}
                         >
                             Delete
                         </Button>
-                        <Button variant='ghost' onClick={onDeleteClose}>
+                        <Button onClick={onDeleteClose}>
                             Cancel
                         </Button>
                     </ModalFooter>

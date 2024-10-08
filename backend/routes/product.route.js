@@ -32,7 +32,7 @@ router.post("/", async (req, res) => {
     !product.price || 
     !product.type || 
     !product.category || 
-    !product.size || 
+    //!product.size || 
     !product.imageRed || 
     !product.imageBlue || 
     !product.imageGreen || 
