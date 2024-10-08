@@ -1,72 +1,74 @@
-import { Box, Button, Center, Text, useColorModeValue, VStack, HStack, Heading, Link, Stack, SimpleGrid, filter  } from "@chakra-ui/react"
+import { Box, Button, Center, Text, useColorModeValue, VStack, HStack, Heading, Link, Stack, SimpleGrid, filter } from "@chakra-ui/react"
 import CartItem from "../components/CartItem"
 import { useCartStore } from "../store/cart"
 import { useEffect } from 'react'
 import { useProductStore } from "../store/product"
 import { filterProps } from "framer-motion"
 
-const CartPage= () => {
-const {fetchCarts, carts } = useCartStore()
-const {fetchProducts, products } = useProductStore()
-useEffect(() => {
-    fetchCarts();
-}, [fetchCarts])
-useEffect(() => {
-    fetchProducts();
-}, [fetchProducts])
-
- for(let i = 0; i < products.length; i++) {
-    for (let j = 0; j < carts.length; j++){
-        if (carts[j]._id===products[i]){
-filteredProduct.push({_id:products[i]._id,
-                      color:products[i].color,  
-                    size:products[i].size,
-                    amount:products[i].amount
-})
+const CartPage = () => {
+    const { fetchCarts, carts } = useCartStore()
+    const { fetchProducts, products } = useProductStore()
+    useEffect(() => {
+        fetchCarts();
+    }, [fetchCarts])
+    useEffect(() => {
+        fetchProducts();
+    }, [fetchProducts])
+    const filteredProduct = []
+    for (let i = 0; i < products.length; i++) {
+        for (let j = 0; j < carts.length; j++) {
+            if (carts[j]._id === products[i]._id) {
+                filteredProduct.push({
+                    ...products[i],
+                    color: carts[j].color,
+                    size: carts[j].size,
+                    amount: carts[j].amount
+                })
+            }
         }
     }
- }
+    console.log("filterd", filteredProduct)
 
-    return(
-        
-       
-
-    <Box bg={"#3A3A3A"} w="35%"  p={3} margin={"auto"} marginTop={"2%"} style={{ fontFamily: 'Lora' }}> 
-   
-    <Box bg={useColorModeValue("gray.600", "gray.600")} w="90%" p={"1%"} margin={"auto"} marginTop={"2%"}>
-         
-       
-    <VStack>
-<Text> Min varukorg</Text>
-
-</VStack>
-</Box>
-
-<Box bg={useColorModeValue("gray.600", "gray.600")} w="90%" minH={100}  p={"1%"} margin={"auto"} marginTop={"2%"}>
-
-<VStack>
-
-    {carts.map((cart) => (
-            <CartItem key={cart._id} cart={cart}  />
-        ))},
-
-    
-</VStack>
+    return (
 
 
 
+        <Box bg={"#3A3A3A"} w="35%" p={3} margin={"auto"} marginTop={"2%"} style={{ fontFamily: 'Lora' }}>
 
-</Box>
+            <Box bg={useColorModeValue("gray.600", "gray.600")} w="90%" p={"1%"} margin={"auto"} marginTop={"2%"}>
 
-<Box bg={useColorModeValue("gray.600", "gray.600")} w="90%" p={"1%"} margin={"auto"} marginTop={"2%"}>
-    <VStack spacing={"2%"}>
-<Text>Summa att betala:</Text>
-<Button>Betala</Button>
-</VStack>
-</Box>
-    </Box>
 
-)
+                <VStack>
+                    <Text> Min varukorg</Text>
+
+                </VStack>
+            </Box>
+
+            <Box bg={useColorModeValue("gray.600", "gray.600")} w="90%" minH={100} p={"1%"} margin={"auto"} marginTop={"2%"}>
+
+                <VStack>
+
+                    {filteredProduct.map((cart) => (
+                        <CartItem key={cart._id} cart={cart} />
+                    ))},
+
+
+                </VStack>
+
+
+
+
+            </Box>
+
+            <Box bg={useColorModeValue("gray.600", "gray.600")} w="90%" p={"1%"} margin={"auto"} marginTop={"2%"}>
+                <VStack spacing={"2%"}>
+                    <Text>Summa att betala:</Text>
+                    <Button>Betala</Button>
+                </VStack>
+            </Box>
+        </Box>
+
+    )
 }
 
 
