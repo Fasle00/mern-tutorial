@@ -58,7 +58,7 @@ import { Link } from "react-router-dom";
 import AdminProduct from "../components/adminProduct";
 
 
-const AdminPage = (user) => {
+const AdminPage = ({ user }) => {
     const { fetchUsers, users, setUsers, updateUsers } = useUserStore();
     const { getDisclosureProps, getButtonProps, } = useDisclosure()
 
@@ -103,94 +103,91 @@ const AdminPage = (user) => {
 
         <Tabs orientation="vertical">
             <TabList>
-                {users.accessLevel == "admin"(
                     <Tab>Users</Tab>
-                )}
+               
                 <Tab>Products</Tab>
             </TabList>
 
             <TabPanels>
-                {user.accessLevel == "admin"(
+                        <TabPanel>
+                            <VStack>
+                                <Text
+                                    fontSize={"30"}
+                                    fontWeight={"bold"}
+                                    bgClip={"text"}
+                                    TextAlign={"center"}
+                                >
+                                    Edit acces level of users
+                                </Text>
+                                <Heading as='h1'>  </Heading>
 
-                    <TabPanel>
-                        <VStack>
-                            <Text
-                                fontSize={"30"}
-                                fontWeight={"bold"}
-                                bgClip={"text"}
-                                TextAlign={"center"}
-                            >
-                                Edit acces level of users
-                            </Text>
-                            <Heading as='h1'>  </Heading>
-
-                            <TableContainer w={"full"} bg={useColorModeValue("white", "gray.800")} p={6} rounded={"lg"} shadow={"md"} >
-                                <Table variant='striped' colorScheme='red'>
-                                    <TableCaption>Userinfo</TableCaption>
-                                    <Thead borderBottom={'2px'} >
-                                        <Tr>
-                                            <Th>Username</Th>
-                                            <Th>Email</Th>
-                                            <Th>Access Level</Th>
-                                            <Th>Created</Th>
-                                        </Tr>
-                                    </Thead>
-                                    <Tbody>
-                                        {users.map((user) => (
-                                            <Tr key={user.displayName}>
-                                                <Td>{user.displayName}</Td>
-                                                <Td>{user.email}</Td>
-                                                <Td>
-                                                    <Select variant='unstyled' onChange={(e) => {
-                                                        console.log("e.target.value", e.target.value);
-                                                        console.log("user._id", user._id);
-                                                        handleUpdateUser(user._id, e.target.value);
-                                                        const updatedUser = { ...user, accessLevel: e.target.value };
-                                                        let updateUserList = [];
-                                                        let selectedUserID = user._id;
-                                                        users.map((user) => {
-                                                            if (user.displayName === updatedUser.displayName) {
-                                                                updateUserList.push(updatedUser);
-                                                            } else {
-                                                                updateUserList.push(user);
-                                                            }
-                                                        })
-                                                        setUpdatedUsers(updateUserList);
-                                                    }}>
-                                                        <option
-                                                            selected={user.accessLevel === "admin" ? "selected" : ""}
-                                                            value="admin">
-                                                            Admin
-                                                        </option>
-                                                        <option
-                                                            selected={user.accessLevel === "editor" ? "selected" : ""}
-                                                            value="editor">
-                                                            Editor
-                                                        </option>
-                                                        <option
-                                                            selected={!(user.accessLevel === "admin" || user.accessLevel === "editor") ? "selected" : ""}
-                                                            value="user">
-                                                            User
-                                                        </option>
-                                                    </Select>
-                                                </Td>
-                                                <Td>{user.createdAt}</Td>
+                                <TableContainer w={"full"} bg={useColorModeValue("white", "gray.800")} p={6} rounded={"lg"} shadow={"md"} >
+                                    <Table variant='striped' colorScheme='red'>
+                                        <TableCaption>Userinfo</TableCaption>
+                                        <Thead borderBottom={'2px'} >
+                                            <Tr>
+                                                <Th>Username</Th>
+                                                <Th>Email</Th>
+                                                <Th>Access Level</Th>
+                                                <Th>Created</Th>
                                             </Tr>
-                                        ))}
-                                    </Tbody>
-                                    <Tfoot borderTop={'2px'} >
-                                        <Tr>
-                                            <Th>Username</Th>
-                                            <Th>Email</Th>
-                                            <Th>Access level</Th>
-                                            <Th>Created</Th>
-                                        </Tr>
-                                    </Tfoot>
-                                </Table>
-                            </TableContainer>
-                        </VStack>
-                    </TabPanel>
-                )}
+                                        </Thead>
+                                        <Tbody>
+                                            {users.map((user) => (
+                                                <Tr key={user.displayName}>
+                                                    <Td>{user.displayName}</Td>
+                                                    <Td>{user.email}</Td>
+                                                    <Td>
+                                                        <Select variant='unstyled' onChange={(e) => {
+                                                            console.log("e.target.value", e.target.value);
+                                                            console.log("user._id", user._id);
+                                                            handleUpdateUser(user._id, e.target.value);
+                                                            const updatedUser = { ...user, accessLevel: e.target.value };
+                                                            let updateUserList = [];
+                                                            let selectedUserID = user._id;
+                                                            users.map((user) => {
+                                                                if (user.displayName === updatedUser.displayName) {
+                                                                    updateUserList.push(updatedUser);
+                                                                } else {
+                                                                    updateUserList.push(user);
+                                                                }
+                                                            })
+                                                            setUpdatedUsers(updateUserList);
+                                                        }}>
+                                                            <option
+                                                                selected={user.accessLevel === "admin" ? "selected" : ""}
+                                                                value="admin">
+                                                                Admin
+                                                            </option>
+                                                            <option
+                                                                selected={user.accessLevel === "editor" ? "selected" : ""}
+                                                                value="editor">
+                                                                Editor
+                                                            </option>
+                                                            <option
+                                                                selected={!(user.accessLevel === "admin" || user.accessLevel === "editor") ? "selected" : ""}
+                                                                value="user">
+                                                                User
+                                                            </option>
+                                                        </Select>
+                                                    </Td>
+                                                    <Td>{user.createdAt}</Td>
+                                                </Tr>
+                                            ))}
+                                        </Tbody>
+                                        <Tfoot borderTop={'2px'} >
+                                            <Tr>
+                                                <Th>Username</Th>
+                                                <Th>Email</Th>
+                                                <Th>Access level</Th>
+                                                <Th>Created</Th>
+                                            </Tr>
+                                        </Tfoot>
+                                    </Table>
+                                </TableContainer>
+                            </VStack>
+                        </TabPanel>
+                    
 
                 <TabPanel>
                     {/* Product stuff */}

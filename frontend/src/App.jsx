@@ -54,7 +54,7 @@ function App() {
         <Route path="/" element={ <HomePage/> } />
         <Route path="/login" element={ user ? <Navigate to="/" /> : <LoginPage /> } />
         <Route path="/create" element={ user ? <CreatePage/> : <Navigate to="/login" />} />
-        <Route path="/admin" element={ user && user.accessLevel==="admin" || user.accessLevel=="editor" ? <AdminPage /> : <Navigate to="/login" />}/>
+        <Route path="/admin" element={ user && user.accessLevel==="admin" ? <AdminPage /> : <Navigate to="/login" />}/>
         <Route path="/cart" element={<CartPage/>}/>
         <Route path="/product/:id" element={<ViewProductPage />} />
         <Route path="/:id" element={<SelectionPage />} />
