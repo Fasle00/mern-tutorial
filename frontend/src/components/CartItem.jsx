@@ -31,10 +31,11 @@ const CartItem = ({ cart }) => {
 
 
 
-
-
+    
+    
     const handleDeleteCart = async () => {
-        const { success, message } = await deleteCartItem();
+        console.log("cart", cart)
+        const { success, message } = await deleteCartItem(cart._id, cart.color, cart.size);
         if (!success) {
             toast({
                 title: "Error",
@@ -129,7 +130,7 @@ const CartItem = ({ cart }) => {
 
                             
                             
-                    <IconButton bg={"#0000"} _hover={"#0000"} left={3} onClick={() => handleDeleteCart(cart._id)}><MdDelete size={"60%"} /></IconButton>
+                    <IconButton bg={"#0000"} _hover={"#0000"} left={3} onClick={handleDeleteCart}><MdDelete size={"60%"} /></IconButton>
                         </HStack>
 
                         <HStack pt={2}>
@@ -139,12 +140,12 @@ const CartItem = ({ cart }) => {
                             <FaCircle color={cart.color} />
                         </HStack>
                         <HStack>
-                            <Text> Storlek: </Text>
+                            <Text> Storlek: </Text> 
                             <Text style={{ textTransform: "capitalize" }}>{cart.size}</Text>
                         </HStack>
                         <Text paddingBottom={2}> Antal: {cart.amount}</Text>
                     </Box>
-
+                   
 
                 </VStack>
             </HStack>

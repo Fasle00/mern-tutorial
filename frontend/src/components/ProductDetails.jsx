@@ -32,7 +32,7 @@ import { useCartStore } from "../store/cart";
 const ProductDetails = ({ product, cart }) => {
     const textColor = "white";
     const bg = useColorModeValue("#3A3A3A", "#3A3A3A");
-    const { createCart } = useCartStore
+    const { createCart } = useCartStore()
     function CustomRadio(props) {
         const { image, ...radioProps } = props
         const { state, getInputProps, getRadioProps, htmlProps, getLabelProps } =
@@ -107,17 +107,27 @@ const ProductDetails = ({ product, cart }) => {
         setCartItem({...cartItem, size: product.sizes[0]});
     } 
 
-   
 
     const handleAddToCart = () => {
         console.log("Lägger till i varukorgen:", cartItem);
-        //const { success, message } = createCart(cartItem);
-        toast({
+        const { success, message } = createCart(cartItem);
+        if (!success){
+            toast({
             title: "Produkten har lagts till i varukorgen",
             status: "success",
             duration: 9000,
             isClosable: true,
         })
+        }else{
+            toast({
+                title: "Du har inte fyllt i allt",
+                status: "error",
+                duration: 9000,
+                isClosable: true,
+            }) 
+        }
+        
+        
     }
 
     return (
@@ -204,7 +214,7 @@ const ProductDetails = ({ product, cart }) => {
 
             <Box boxSize={'250px'} p={0}>
                 <HStack spacing={4} bg={bg}>
-                    <Button onClick={handleAddToCart}>
+                    <Button onClick={handleAddToCart} >
                         <Text>
                             Lägg till i varukorgen
                         </Text>

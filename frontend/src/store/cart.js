@@ -4,11 +4,11 @@ export const useCartStore = create((set) => ({
   carts: [],
   setCarts: (cart) => set({ carts }),
   createCart: async (newCart) => {
-    debugger
+
     if (!newCart._id || !newCart.color || !newCart.size || !newCart.amount) {
       return { success: false, message: "Please fill in all fields." };
     }
-    
+
     const res = await fetch("/api/users/cart", {
       method: "POST",
       headers: {
@@ -17,24 +17,30 @@ export const useCartStore = create((set) => ({
       body: JSON.stringify(newCart),
     });
     const data = await res.json();
+    if (!data.success) return { success: false, message: data.message }
     set((state) => ({ carts: [...state.carts, data.cart] }));
     return { success: true, message: "Cart created successfully" };
-  }, 
+  },
   fetchCarts: async () => {
     const res = await fetch("/api/users/cart");
     const data = await res.json();
     console.log(data);
     set({ carts: data.cart });
   },
-  deleteCartItem: async () => {
+  deleteCartItem: async (cartId, cartColor, cartSize) => {
     const res = await fetch(`/api/users/cart`, {
       method: "DELETE",
+
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ _id: cartId, color: cartColor, size: cartSize }),
     });
     const data = await res.json();
     if (!data.success) return { success: false, message: data.message };
 
     set((state) => ({
-      carts: state.carts.filter((cart) => cart._id !== pid),
+      carts: state.carts.filter((cart) => cart._id !== cartId || cart.color !== cartColor || cart.size !== cartSize),
     }));
     return { success: true, message: data.message };
   },
@@ -56,5 +62,5 @@ export const useCartStore = create((set) => ({
     }));
 
     return { success: true, message: data.message };
-  }, 
+  },
 }))

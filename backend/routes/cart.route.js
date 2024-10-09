@@ -22,7 +22,7 @@ router.get("/", async (req, res) => {
   // if (!isAdminOrUser(req.session.user)) return res.status(401).json({ success: false, message: "Unauthorized" });
 
   try {
-    const data = await User.find({ _id: req.session.user._id}, "cart");
+    const data = await User.find({ _id: noelId}, "cart");
     const user = data[0];
 
     res.status(200).json({ success: true, cart: user.cart });
@@ -60,7 +60,7 @@ router.post("/", async (req, res) => {
   }
 
   try {
-    const user = await User.findById(req.session.user._id);
+    const user = await User.findById(noelId);
     let itemInCart = false;
     user.cart.map((cartItem) => {
       if (
@@ -98,7 +98,7 @@ router.delete("/", async (req, res) => {
   }
 
   try {
-    const user = await User.findById(req.session.user._id);
+    const user = await User.findById(noelId);
     console.log("user: ", user.cart);
     let newCart = [];
     user.cart.map((cartItem) => {
@@ -134,7 +134,7 @@ router.put("/", async (req, res) => {
   }
 
   try {
-    const user = await User.findById(adminId);
+    const user = await User.findById(noelId);
     user.cart = user.cart.map((cartItem) => {
       if (
         cartItem._id === product._id &&
