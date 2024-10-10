@@ -8,16 +8,13 @@ import { FaRegPlusSquare } from "react-icons/fa";
 import { HamburgerIcon } from '@chakra-ui/icons'
 
 
-
-
-
 const Navbar = ({ user, setUser }) => {
     const { colorMode, toggleColorMode } = useColorMode();
     const logout = () => {
         window.open("http://localhost:5000/auth/logout", "_self");
     };
     const { isOpen, onOpen, onClose } = useDisclosure();
-    
+
 
 
 
@@ -147,14 +144,14 @@ const Navbar = ({ user, setUser }) => {
 
                                     {(user.accessLevel == "admin" || user.accessLevel == "editor") && (
                                         <MenuItem>
-                                        <Link to={"/create"}>
-                                            <Button w={"full"} bg={"bg"} variant={'link'}>
-                                                <MenuItem textColor={useColorModeValue("black", "white")}>
-                                                    Create
-                                                </MenuItem>
-                                            </Button>
-                                        </Link>
-                                    </MenuItem>
+                                            <Link to={"/create"}>
+                                                <Button w={"full"} bg={"bg"} variant={'link'}>
+                                                    <MenuItem textColor={useColorModeValue("black", "white")}>
+                                                        Create
+                                                    </MenuItem>
+                                                </Button>
+                                            </Link>
+                                        </MenuItem>
                                     )}
 
                                     <MenuItem>
