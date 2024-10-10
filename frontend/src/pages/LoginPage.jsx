@@ -41,7 +41,6 @@ const LoginPage = () => {
   return <Container maxW={"container.sm"} style={{ fontFamily: 'Lora' }}>
 
     <VStack>
-
       <Box bg={useColorModeValue("#3A3A3A", "#3A3A3A")} w='80%' p={4} marginTop={10} color={'white'} fontSize={"xl"} >
         <HStack spacing={20}>
           <Text>Logga in med:</Text>
@@ -81,7 +80,6 @@ const LoginPage = () => {
             </VStack>
           </HStack>
         </VStack>
-
       </Box>
     </VStack>
   </Container>

@@ -126,8 +126,6 @@ const ProductDetails = ({ product, cart }) => {
                 isClosable: true,
             }) 
         }
-        
-        
     }
 
     return (
@@ -198,9 +196,6 @@ const ProductDetails = ({ product, cart }) => {
                 </Select>
             </HStack>
 
-
-
-
             <HStack p={3}>
                 <Text>
                     Antal:
@@ -213,8 +208,6 @@ const ProductDetails = ({ product, cart }) => {
                     </NumberInputStepper>
                 </NumberInput>
             </HStack>
-
-
 
             <Box boxSize={'250px'} p={0}>
                 <HStack spacing={4} bg={bg}>

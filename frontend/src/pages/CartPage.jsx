@@ -30,34 +30,21 @@ const CartPage = () => {
     console.log("filterd", filteredProduct)
 
     return (
-
-
-
         <Box bg={"#3A3A3A"} w="35%" p={3} margin={"auto"} marginTop={"2%"} style={{ fontFamily: 'Lora' }}>
-
             <Box bg={useColorModeValue("gray.600", "gray.600")} w="90%" p={"1%"} margin={"auto"} marginTop={"2%"}>
-
-
                 <VStack>
                     <Text> Min varukorg</Text>
-
                 </VStack>
             </Box>
 
             <Box bg={useColorModeValue("gray.600", "gray.600")} w="90%" minH={100} p={"1%"} margin={"auto"} marginTop={"2%"}>
-
                 <VStack>
-
                     {filteredProduct.map((cart) => (
                         <CartItem key={cart._id} cart={cart} />
                     ))},
 
 
                 </VStack>
-
-
-
-
             </Box>
 
             <Box bg={useColorModeValue("gray.600", "gray.600")} w="90%" p={"1%"} margin={"auto"} marginTop={"2%"}>
