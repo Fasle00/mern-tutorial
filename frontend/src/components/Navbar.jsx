@@ -88,29 +88,16 @@ const Navbar = ({ user, setUser }) => {
                             barn
                         </Link>
                     </Text>
-
-
-
-
                 </HStack>
 
-
-
                 <HStack spacing={2} alignItems={"center"} paddingRight={300} >
-
-
-
                     <Menu>
-
-
                         <MenuButton as={Button} rightIcon={<HamburgerIcon color={"white"} />} variant={'link'} fontSize={"xx-large"} >
 
                         </MenuButton>
                         <MenuList textColor={useColorModeValue("black", "white")}>
                             {user ? (
                                 <>
-
-
                                     <MenuItem>
                                         <MenuItem>
                                             <Image src={user.image} alt="profile picture" w="2rem" borderRadius='full' />
@@ -180,18 +167,10 @@ const Navbar = ({ user, setUser }) => {
                                 </Button>
                             </MenuItem>
                         </MenuList>
-
                     </Menu>
-
-
                 </HStack>
-
-
             </Flex>
-
         </Container>
-
-
     )
 }
 

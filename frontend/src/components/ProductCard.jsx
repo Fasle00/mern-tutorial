@@ -136,9 +136,7 @@ const ProductCard = ({ product }) => {
                                 Cancel
                             </Button>
                         </ModalFooter>
-
                     </ModalContent>
-
                 </Modal>
             </Box>
         </Link>
