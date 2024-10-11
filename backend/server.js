@@ -29,7 +29,7 @@ app.use(passport.session());
 // CORS to only allow requests from the frontend and only specific methods
 app.use(
   cors({
-    origin: "http://localhost:5000",
+    origin: "https://mern-tutorial-yzc5.onrender.com",
     methods: "GET,POST,PUT,DELETE",
     credentials: true,
   })
