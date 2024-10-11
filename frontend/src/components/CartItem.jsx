@@ -13,7 +13,8 @@ import {
     useColorModeValue,
     useToast,
     useDisclosure,
-    IconButton
+    IconButton,
+    Icon
 
 } from '@chakra-ui/react';
 import { MdDelete } from "react-icons/md";
@@ -77,7 +78,7 @@ const CartItem = ({ cart }) => {
         }
     };
 
-
+let Displaycolor 
 
 
     return (
@@ -86,39 +87,50 @@ const CartItem = ({ cart }) => {
 
 
 
-                {cart.color === "red" && (
+                {cart.color === "röd" && (
+                   Displaycolor="red" ,
                     <>
+                   
                         <Box w={"40%"}>
+                            
                             <Image src={cart.imageRed} w={300} aspectRatio={1} objectFit={"cover"} alt="image"></Image>
                         </Box>
                     </>
+                   
+                    
+                     
                 )}
-                {cart.color === "green" && (
-                    <>
+                {cart.color === "grön" && (
+                   Displaycolor="green",
+                   
+                   <>
                         <Box w={"40%"}>
                             <Image src={cart.imageGreen} w={300} aspectRatio={1} objectFit={"cover"} alt="image"></Image>
                         </Box>
 
                     </>
 
+                    
                 )}
-                {cart.color === "blue" && (
-                    <>
+                {cart.color === "blå" && (
+                    Displaycolor="blue" ,<>
                         <Box w={"40%"}>
                             <Image src={cart.imageBlue} w={300} aspectRatio={1} objectFit={"cover"} alt="image"></Image>
                         </Box>
 
                     </>
 
+                    
                 )}
-                {cart.color === "yellow" && (
-                    <>
+                {cart.color === "gul" && (
+                  Displaycolor="yellow" , <>
                         <Box w={"40%"}>
                             <Image src={cart.imageYellow} w={300} aspectRatio={1} objectFit={"cover"} alt="image"></Image>
                         </Box>
 
                     </>
 
+                    
                 )}
                 <VStack >
 
@@ -137,7 +149,9 @@ const CartItem = ({ cart }) => {
 
                             <Text > Färg: </Text>
                             <Text style={{ textTransform: "capitalize" }}>{cart.color}</Text>
-                            <FaCircle color={cart.color} />
+
+                            <FaCircle color={Displaycolor} />
+                            
                         </HStack>
                         <HStack>
                             <Text> Storlek: </Text> 
