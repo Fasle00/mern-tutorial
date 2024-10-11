@@ -1,13 +1,13 @@
-import { 
-    Box, 
+import {
+    Box,
     Center,
-    Container, 
-    HStack, 
-    Image, 
-    VStack, 
-    Text, 
-    SimpleGrid, 
-    useColorModeValue, 
+    Container,
+    HStack,
+    Image,
+    VStack,
+    Text,
+    SimpleGrid,
+    useColorModeValue,
 } from '@chakra-ui/react'
 import { useEffect } from 'react'
 import { Link } from "react-router-dom"
@@ -34,6 +34,15 @@ const SelectionPage = () => {
 
     const id = location.pathname.split("/")[1];
     console.log("ID:", id);
+    const breakpoints = {
+        base: '0em', // 0px
+        sm: '30em', // ~480px. em is a relative unit and is dependant on the font-size.
+        md: '48em', // ~768px
+        lg: '62em', // ~992px
+        xl: '80em', // ~1280px
+        '2xl': '96em', // ~1536px
+    }
+
 
     let type = null
     if (splitLocation[2]) {
@@ -62,7 +71,7 @@ const SelectionPage = () => {
 
             <Box bgGradient='linear(to-r, #0000, #3A3A3A, #3A3A3A, #0000)' paddingLeft='40%' paddingRight='40%' >
                 <Text
-                    fontSize='3xl'
+                    fontSize={["2xl", "3xl"]}
                     fontWeight='extrabold'
                     color={'white'}
                     textTransform="capitalize"
@@ -76,7 +85,7 @@ const SelectionPage = () => {
             <VStack spacing={8}>
 
 
-                <SimpleGrid columns={4} spacing={10} w={"full"} paddingTop="3%">
+                <SimpleGrid columns={[1, 2, 4]} spacing={10} w={"full"} paddingTop="3%">
                     <Box
                         shadow='lg'
                         overflow='hidden'
@@ -87,7 +96,7 @@ const SelectionPage = () => {
                         <Image src='https://image.hm.com/assets/hm/ce/53/ce53a6ef590fdf566a6a53762e97a2a09defbcaa.jpg?imwidth=396' alt='REA' h={mx} w='full' objectFit='cover' />
 
                         <Box p={2} position={"absolute"} bottom={3} right={3} left={3} bgGradient='linear(to-r, #3A3A3A, #3A3A3A, #3A3A3A, #0000)' color={"white"} paddingLeft={3} paddingRight={3}>
-                            <Text fontSize='3xl'>REA</Text>
+                            <Text fontSize={'3xl'}>REA</Text>
                         </Box>
                     </Box>
                     <Box
@@ -161,7 +170,7 @@ const SelectionPage = () => {
 
                     <Text
 
-                        fontSize='3xl'
+                        fontSize={["2xl", "3xl"]}
                         fontWeight='extrabold'
                         color={'white'}
                     >
