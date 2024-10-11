@@ -14,8 +14,6 @@ const {
 
 env.config();
 
-const adminId = "66eac8eb1f04e3e0d2ca9d15";
-
 // ALl cart routes that are in cart.route.js
 router.use("/cart", cartRoutes);
 

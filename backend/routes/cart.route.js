@@ -14,15 +14,12 @@ const {
 
 env.config();
 
-const adminId = "66eac8eb1f04e3e0d2ca9d15";
-const noelId = "66fbbcd73a84ed5513a76358";
-
 // Route to get all items in the cart
 router.get("/", async (req, res) => {
   // if (!isAdminOrUser(req.session.user)) return res.status(401).json({ success: false, message: "Unauthorized" });
 
   try {
-    const data = await User.find({ _id: noelId}, "cart");
+    const data = await User.find({ _id: req.session.user._id}, "cart");
     const user = data[0];
 
     res.status(200).json({ success: true, cart: user.cart });
@@ -60,7 +57,7 @@ router.post("/", async (req, res) => {
   }
 
   try {
-    const user = await User.findById(noelId);
+    const user = await User.findById(req.session.user._id);
     let itemInCart = false;
     user.cart.map((cartItem) => {
       if (
@@ -98,7 +95,7 @@ router.delete("/", async (req, res) => {
   }
 
   try {
-    const user = await User.findById(noelId);
+    const user = await User.findById(req.session.user._id);
     console.log("user: ", user.cart);
     let newCart = [];
     user.cart.map((cartItem) => {
@@ -134,7 +131,7 @@ router.put("/", async (req, res) => {
   }
 
   try {
-    const user = await User.findById(noelId);
+    const user = await User.findById(req.session.user._id);
     user.cart = user.cart.map((cartItem) => {
       if (
         cartItem._id === product._id &&
