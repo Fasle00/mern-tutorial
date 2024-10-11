@@ -1,5 +1,5 @@
 
-import { Button, Container, Flex, HStack, Text, useColorMode, useColorModeValue, Menu, MenuButton, MenuList, MenuItem, Image, useDisclosure, Box } from "@chakra-ui/react"
+import { Button, Show, Hide, Container, Flex, HStack, Text, useColorMode, useColorModeValue, Menu, MenuButton, MenuList, MenuItem, Image, useDisclosure, Box } from "@chakra-ui/react"
 import { Link } from "react-router-dom";
 import { IoMoon } from "react-icons/io5";
 import { LuSun } from "react-icons/lu";
@@ -15,8 +15,14 @@ const Navbar = ({ user, setUser }) => {
     };
     const { isOpen, onOpen, onClose } = useDisclosure();
 
-
-
+    const breakpoints = {
+        base: '0em', // 0px
+        sm: '30em', // ~480px. em is a relative unit and is dependant on the font size.
+        md: '48em', // ~768px
+        lg: '62em', // ~992px
+        xl: '80em', // ~1280px
+        '2xl': '96em', // ~1536px
+    }
 
     return (
         <Container maxW={"full"} px={4} bg={useColorModeValue("#3A3A3A", "#3A3A3A")} style={{ fontFamily: 'Lora' }}>
@@ -25,13 +31,12 @@ const Navbar = ({ user, setUser }) => {
                 alignItems={"center"}
                 justifyContent={"space-between"}
                 flexDir={{
-                    base: "column",
                     sm: "row"
                 }}
 
             >
 
-                <HStack spacing={0} alignItems={"center"} paddingLeft={300}>
+                <HStack spacing={0} alignItems={"center"} paddingLeft={[20, 100, 200]}>
                     <Text
                         color={"white"}
                         fontSize='5xl'
@@ -42,55 +47,61 @@ const Navbar = ({ user, setUser }) => {
                         <Link to={"/"}>
                             able
                         </Link>
-
                     </Text>
                     <GiShirtButton color="#79CFFF" size={35} />
 
 
 
-                    <Text
-                        color={"white"}
-                        fontSize='3xl'
-                        fontWeight='extrabold'
-                        paddingLeft={30}
-                    >
-                        <Link to={"/"}>
-                            home
-                        </Link>
-                    </Text>
-                    <Text
-                        color={"white"}
-                        fontSize='3xl'
-                        fontWeight='extrabold'
-                        paddingLeft={5}
-                    >
-                        <Link to={"/dam"}>
-                            dam
-                        </Link>
-                    </Text>
-                    <Text
-                        color={"white"}
-                        fontSize='3xl'
-                        fontWeight='extrabold'
-                        paddingLeft={5}
-                    >
-                        <Link to={"/herr"}>
-                            herr
-                        </Link>
-                    </Text>
-                    <Text
-                        color={"white"}
-                        fontSize='3xl'
-                        fontWeight='extrabold'
-                        paddingLeft={5}
-                    >
-                        <Link to={"/barn"}>
-                            barn
-                        </Link>
-                    </Text>
+                    <Show breakpoint="(min-width: 850px)">
+
+                        <Text
+                            color={"white"}
+                            fontSize='3xl'
+                            fontWeight='extrabold'
+                            paddingLeft={30}
+
+                        >
+                            <Link to={"/"}>
+                                home
+                            </Link>
+                        </Text>
+                        <Text
+                            color={"white"}
+                            fontSize='3xl'
+                            fontWeight='extrabold'
+                            paddingLeft={5}
+                        >
+                            <Link to={"/dam"}>
+                                dam
+                            </Link>
+                        </Text>
+                        <Text
+                            color={"white"}
+                            fontSize='3xl'
+                            fontWeight='extrabold'
+                            paddingLeft={5}
+                        >
+                            <Link to={"/herr"}>
+                                herr
+                            </Link>
+                        </Text>
+                        <Text
+                            color={"white"}
+                            fontSize='3xl'
+                            fontWeight='extrabold'
+                            paddingLeft={5}
+                        >
+                            <Link to={"/barn"}>
+                                barn
+                            </Link>
+                        </Text>
+
+                    </Show>
+
                 </HStack>
 
-                <HStack spacing={2} alignItems={"center"} paddingRight={300} >
+
+                <HStack spacing={2} alignItems={"center"} paddingRight={[20, 150, 300]} >
                     <Menu>
                         <MenuButton as={Button} rightIcon={<HamburgerIcon color={"white"} />} variant={'link'} fontSize={"xx-large"} >
 
@@ -140,6 +151,46 @@ const Navbar = ({ user, setUser }) => {
                                             </Link>
                                         </MenuItem>
                                     )}
+
+                                    <Show breakpoint="(max-width: 850px)">
+
+                                        <MenuItem>
+                                            <Text
+                                                color={"white"}
+                                                fontSize='3xl'
+                                                fontWeight='extrabold'
+                                                paddingLeft={5}
+                                            >
+                                                <Link to={"/dam"}>
+                                                    dam
+                                                </Link>
+                                            </Text>
+                                        </MenuItem>
+                                        <MenuItem>
+                                            <Text
+                                                color={"white"}
+                                                fontSize='3xl'
+                                                fontWeight='extrabold'
+                                                paddingLeft={5}
+                                            >
+                                                <Link to={"/herr"}>
+                                                    herr
+                                                </Link>
+                                            </Text>
+                                        </MenuItem>
+                                        <MenuItem>
+                                            <Text
+                                                color={"white"}
+                                                fontSize='3xl'
+                                                fontWeight='extrabold'
+                                                paddingLeft={5}
+                                            >
+                                                <Link to={"/barn"}>
+                                                    barn
+                                                </Link>
+                                            </Text>
+                                        </MenuItem>
+                                    </Show>
 
                                     <MenuItem>
                                         <Button w={"full"} bg={"bg"} variant={'link'}>
