@@ -30,7 +30,7 @@ const CartPage = () => {
     console.log("filterd", filteredProduct)
 
     return (
-        <Box bg={"#3A3A3A"} w="35%" p={3} margin={"auto"} marginTop={"2%"} style={{ fontFamily: 'Lora' }}>
+        <Box bg={"#3A3A3A"} w="35%" minW={"21rem"} p={3} margin={"auto"} marginTop={"2%"} style={{ fontFamily: 'Lora' }}>
             <Box bg={useColorModeValue("gray.600", "gray.600")} w="90%" p={"1%"} margin={"auto"} marginTop={"2%"}>
                 <VStack>
                     <Text> Min varukorg</Text>
