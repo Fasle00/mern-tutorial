@@ -106,6 +106,8 @@ const Navbar = ({ user, setUser }) => {
                         <MenuButton as={Button} rightIcon={<HamburgerIcon color={"white"} />} variant={'link'} fontSize={"xx-large"} >
 
                         </MenuButton>
+
+
                         <MenuList textColor={useColorModeValue("black", "white")}>
                             {user ? (
                                 <>
@@ -130,15 +132,6 @@ const Navbar = ({ user, setUser }) => {
                                         </>
                                     )}
 
-                                    <MenuItem>
-                                        <Link to={"/cart"}>
-                                            <Button w={"full"} bg={"bg"} variant={'link'}>
-                                                <MenuItem textColor={useColorModeValue("black", "white")}>
-                                                    Cart
-                                                </MenuItem>
-                                            </Button>
-                                        </Link>
-                                    </MenuItem>
 
                                     {(user.accessLevel == "admin" || user.accessLevel == "editor") && (
                                         <MenuItem>
@@ -152,6 +145,20 @@ const Navbar = ({ user, setUser }) => {
                                         </MenuItem>
                                     )}
 
+
+                                    <MenuItem>
+                                        <Text
+                                            color={"white"}
+                                            fontSize='3xl'
+                                            fontWeight='extrabold'
+                                            paddingLeft={5}
+                                        >
+                                            <Link to={"/cart"}>
+                                                Cart
+                                            </Link>
+                                        </Text>
+                                    </MenuItem>
+
                                     <Show breakpoint="(max-width: 850px)">
 
                                         <MenuItem>
@@ -162,7 +169,7 @@ const Navbar = ({ user, setUser }) => {
                                                 paddingLeft={5}
                                             >
                                                 <Link to={"/dam"}>
-                                                    dam
+                                                    Dam
                                                 </Link>
                                             </Text>
                                         </MenuItem>
@@ -174,7 +181,7 @@ const Navbar = ({ user, setUser }) => {
                                                 paddingLeft={5}
                                             >
                                                 <Link to={"/herr"}>
-                                                    herr
+                                                    Herr
                                                 </Link>
                                             </Text>
                                         </MenuItem>
@@ -186,7 +193,7 @@ const Navbar = ({ user, setUser }) => {
                                                 paddingLeft={5}
                                             >
                                                 <Link to={"/barn"}>
-                                                    barn
+                                                    Barn
                                                 </Link>
                                             </Text>
                                         </MenuItem>
