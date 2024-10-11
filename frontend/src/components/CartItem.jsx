@@ -91,9 +91,9 @@ let Displaycolor
                    Displaycolor="red" ,
                     <>
                    
-                        <Box w={"40%"}>
+                        <Box >
                             
-                            <Image src={cart.imageRed} w={300} aspectRatio={1} objectFit={"cover"} alt="image"></Image>
+                            <Image src={cart.imageRed} w={"35rem"} minW={"5rem"} aspectRatio={1/1} objectFit={"cover"} alt="image"></Image>
                         </Box>
                     </>
                    
@@ -104,8 +104,8 @@ let Displaycolor
                    Displaycolor="green",
                    
                    <>
-                        <Box w={"40%"}>
-                            <Image src={cart.imageGreen} w={300} aspectRatio={1} objectFit={"cover"} alt="image"></Image>
+                        <Box >
+                            <Image src={cart.imageGreen} w={"35rem"} minW={"5rem"} aspectRatio={1/1} objectFit={"cover"} alt="image"></Image>
                         </Box>
 
                     </>
@@ -114,8 +114,8 @@ let Displaycolor
                 )}
                 {cart.color === "blå" && (
                     Displaycolor="blue" ,<>
-                        <Box w={"40%"}>
-                            <Image src={cart.imageBlue} w={300} aspectRatio={1} objectFit={"cover"} alt="image"></Image>
+                        <Box >
+                            <Image src={cart.imageBlue} w={"35rem"} minW={"5rem"} aspectRatio={1/1} objectFit={"cover"} alt="image"></Image>
                         </Box>
 
                     </>
@@ -124,8 +124,8 @@ let Displaycolor
                 )}
                 {cart.color === "gul" && (
                   Displaycolor="yellow" , <>
-                        <Box w={"40%"}>
-                            <Image src={cart.imageYellow} w={300} aspectRatio={1} objectFit={"cover"} alt="image"></Image>
+                        <Box >
+                            <Image src={cart.imageYellow} w={"35rem"}minW={"5rem"} aspectRatio={1/1} objectFit={"cover"} alt="image"></Image>
                         </Box>
 
                     </>
@@ -134,15 +134,15 @@ let Displaycolor
                 )}
                 <VStack >
 
-                    <Box fontSize={"110%"} p={"1%"} w={150}>
+                    <Box fontSize={"110%"} p={"1%"} w={"15rem"}>
 
-                        <HStack spacing={"95%"}>
+                        <HStack >
                            
                             <Text fontSize={"120%"}>{cart.name}</Text>
 
                             
                             
-                    <IconButton bg={"#0000"} _hover={"#0000"} left={3} onClick={handleDeleteCart}><MdDelete size={"60%"} /></IconButton>
+                    <IconButton bg={"#0000"} _hover={"#0000"} /* left={3} */ paddingLeft={"5rem"} onClick={handleDeleteCart}><MdDelete size={"90%"} /></IconButton>
                         </HStack>
 
                         <HStack pt={2}>
