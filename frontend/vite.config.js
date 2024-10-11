@@ -7,7 +7,7 @@ export default defineConfig({
   server: {
 		proxy: {
 			"/api": {
-				target: "https://mern-tutorial-yzc5.onrender.com/",
+				target: "https://mern-tutorial-yzc5.onrender.com",
 			},
 		},
 	},
