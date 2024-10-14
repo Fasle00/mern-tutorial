@@ -16,7 +16,7 @@ env.config();
 
 // Route to get all items in the cart
 router.get("/", async (req, res) => {
-  // if (!isAdminOrUser(req.session.user)) return res.status(401).json({ success: false, message: "Unauthorized" });
+  if (!isAdminOrUser(req.session.user)) return res.status(401).json({ success: false, message: "Unauthorized" });
 
   try {
     const data = await User.find({ _id: req.session.user._id}, "cart");
@@ -47,7 +47,7 @@ router.get("/:id", async (req, res) => {
 
 // Route to add a new item to the cart
 router.post("/", async (req, res) => {
-  if (!isUser(req.session.user)) return res.status(401).json({ success: false, message: "Unauthorized" });
+  if (!isAdminOrUser(req.session.user)) return res.status(401).json({ success: false, message: "Unauthorized" });
 
   const product = req.body;
   if (!mongoose.Types.ObjectId.isValid(product._id)) {
