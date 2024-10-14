@@ -11,7 +11,7 @@ import { HamburgerIcon } from '@chakra-ui/icons'
 const Navbar = ({ user, setUser }) => {
     const { colorMode, toggleColorMode } = useColorMode();
     const logout = () => {
-        window.open("http://localhost:5000/auth/logout", "_self");
+        window.open("https://mern-tutorial-yzc5.onrender.com/auth/logout", "_self");
     };
     const { isOpen, onOpen, onClose } = useDisclosure();
 
