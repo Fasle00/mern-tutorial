@@ -22,7 +22,7 @@ import { color } from 'framer-motion'
 
 const LoginPage = () => {
   const google = () => {
-    window.open("http://localhost:5000/auth/google", "_self");
+    window.open("https://mern-tutorial-yzc5.onrender.com/auth/google", "_self");
   };
 
   /* För fler login metoder i framtiden
