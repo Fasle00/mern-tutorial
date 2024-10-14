@@ -147,55 +147,51 @@ const Navbar = ({ user, setUser }) => {
 
 
                                     <MenuItem>
-                                        <Text
-                                            color={"white"}
-                                            fontSize='3xl'
-                                            fontWeight='extrabold'
-                                            paddingLeft={5}
-                                        >
-                                            <Link to={"/cart"}>
-                                                Cart
-                                            </Link>
-                                        </Text>
+
+                                        <Link to={"/cart"}>
+                                            <Button w={"full"} bg={"bg"} variant={'link'}>
+                                                <MenuItem textColor={useColorModeValue("black", "white")}>
+                                                    Cart
+                                                </MenuItem>
+                                            </Button>
+                                        </Link>
+
                                     </MenuItem>
 
                                     <Show breakpoint="(max-width: 850px)">
 
                                         <MenuItem>
-                                            <Text
-                                                color={"white"}
-                                                fontSize='3xl'
-                                                fontWeight='extrabold'
-                                                paddingLeft={5}
-                                            >
-                                                <Link to={"/dam"}>
-                                                    Dam
-                                                </Link>
-                                            </Text>
+
+                                            <Link to={"/dam"}>
+                                                <Button w={"full"} bg={"bg"} variant={'link'}>
+                                                    <MenuItem textColor={useColorModeValue("black", "white")}>
+                                                        Dam
+                                                    </MenuItem>
+                                                </Button>
+                                            </Link>
+
                                         </MenuItem>
                                         <MenuItem>
-                                            <Text
-                                                color={"white"}
-                                                fontSize='3xl'
-                                                fontWeight='extrabold'
-                                                paddingLeft={5}
-                                            >
-                                                <Link to={"/herr"}>
-                                                    Herr
-                                                </Link>
-                                            </Text>
+
+                                            <Link to={"/herr"}>
+                                                <Button w={"full"} bg={"bg"} variant={'link'}>
+                                                    <MenuItem textColor={useColorModeValue("black", "white")}>
+                                                        Herr
+                                                    </MenuItem>
+                                                </Button>
+                                            </Link>
+
                                         </MenuItem>
                                         <MenuItem>
-                                            <Text
-                                                color={"white"}
-                                                fontSize='3xl'
-                                                fontWeight='extrabold'
-                                                paddingLeft={5}
-                                            >
-                                                <Link to={"/barn"}>
-                                                    Barn
-                                                </Link>
-                                            </Text>
+
+                                            <Link to={"/barn"}>
+                                                <Button w={"full"} bg={"bg"} variant={'link'}>
+                                                    <MenuItem textColor={useColorModeValue("black", "white")}>
+                                                        Barn
+                                                    </MenuItem>
+                                                </Button>
+                                            </Link>
+
                                         </MenuItem>
                                     </Show>
 
