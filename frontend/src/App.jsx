@@ -19,7 +19,7 @@ function App() {
 
   useEffect(() => {
     const getUser = () => {
-      fetch("https://mern-tutorial-yzc5.onrender.com/auth/login/success", {
+      fetch("http://localhost:5000/auth/login/success", {
         method: "GET",
         credentials: "include",
         headers: {
