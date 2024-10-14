@@ -4,6 +4,7 @@ const passport = require("passport");
 const User = require("../models/user.model");
 
 const CLIENT_URL = "http://localhost:5000/";
+const RENDER_URL = "https://mern-tutorial-yzc5.onrender.com/";
 
 // Callback route for a successful login 
 router.get("/login/success", async (req, res) => {
@@ -56,7 +57,7 @@ router.get("/login/failed", (req, res) => {
 router.get("/logout", (req, res) => {
   req.session.user = null;
   req.logout();
-  res.redirect(CLIENT_URL);
+  res.redirect(RENDER_URL);
 });
 
 // Route to authenticate with Google
@@ -69,7 +70,7 @@ router.get(
 router.get(
   "/google/callback",
   passport.authenticate("google", {
-    successRedirect: CLIENT_URL,
+    successRedirect: RENDER_URL,
     failureRedirect: "/login/failed",
   })
 );
