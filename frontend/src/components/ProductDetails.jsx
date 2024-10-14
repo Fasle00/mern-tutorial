@@ -111,7 +111,7 @@ const ProductDetails = ({ product, cart }) => {
     const handleAddToCart = () => {
         console.log("Lägger till i varukorgen:", cartItem);
         const { success, message } = createCart(cartItem);
-        if (success){
+        if (!success){
             toast({
             title: "Produkten har lagts till i varukorgen",
             status: "success",
