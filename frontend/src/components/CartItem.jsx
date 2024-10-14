@@ -42,7 +42,7 @@ const CartItem = ({ cart }) => {
                 title: "Error",
                 description: message,
                 status: "error",
-                duration: 3000,
+                duration: 1500,
                 isClosable: true,
             });
         } else {
@@ -50,7 +50,7 @@ const CartItem = ({ cart }) => {
                 title: "Success",
                 description: message,
                 status: "success",
-                duration: 3000,
+                duration: 1500,
                 isClosable: true,
             });
         }
@@ -64,15 +64,15 @@ const CartItem = ({ cart }) => {
                 title: "Error",
                 description: message,
                 status: "error",
-                duration: 3000,
+                duration: 1500,
                 isClosable: true,
             });
         } else {
             toast({
                 title: "Success",
-                description: "Product updated successfully",
+                description: message,
                 status: "success",
-                duration: 3000,
+                duration: 1500,
                 isClosable: true,
             });
         }
