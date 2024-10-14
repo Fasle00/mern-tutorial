@@ -47,7 +47,7 @@ router.get("/:id", async (req, res) => {
 
 // Route to add a new item to the cart
 router.post("/", async (req, res) => {
-  // if (!isUser(req.session.user)) return res.status(401).json({ success: false, message: "Unauthorized" });
+  if (!isUser(req.session.user)) return res.status(401).json({ success: false, message: "Unauthorized" });
 
   const product = req.body;
   if (!mongoose.Types.ObjectId.isValid(product._id)) {
@@ -84,7 +84,7 @@ router.post("/", async (req, res) => {
 
 // Route to delete an item from the cart
 router.delete("/", async (req, res) => {
-  // if (!isAdminOrUser(req.session.user)) return res.status(401).json({ success: false, message: "Unauthorized" });
+  if (!isAdminOrUser(req.session.user)) return res.status(401).json({ success: false, message: "Unauthorized" });
 
   const product = req.body;
   console.log("product: ", req.body);
@@ -121,7 +121,7 @@ router.delete("/", async (req, res) => {
 
 // Route to update an item in the cart
 router.put("/", async (req, res) => {
-  // if (!isAdminOrUser(req.session.user)) return res.status(401).json({ success: false, message: "Unauthorized" });
+  if (!isAdminOrUser(req.session.user)) return res.status(401).json({ success: false, message: "Unauthorized" });
 
   const product = req.body;
   if (!mongoose.Types.ObjectId.isValid(product._id)) {
