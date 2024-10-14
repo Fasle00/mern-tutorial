@@ -158,7 +158,7 @@ const ProductDetails = ({ product, cart }) => {
                     <Text color={textColor} fontSize={'4xl'}>
                         Pris: {product.price}:-
                     </Text>
-                    <Text w={"100%"} wordBreak={"keep-all"}>
+                    <Text w={"100%"} wordBreak={"keep-all"} color={textColor}>
                         {product.description}
                     </Text>
 
@@ -167,7 +167,7 @@ const ProductDetails = ({ product, cart }) => {
 
             {/* Color buttons */}
             <HStack p={3}>
-                <Text>
+                <Text color={textColor}>
                     Färg:
                 </Text>
                 <Stack {...getRootProps()}>
@@ -187,7 +187,7 @@ const ProductDetails = ({ product, cart }) => {
             </HStack>
 
             <HStack>
-                <Select onChange={(e) => {setCartItem({...cartItem, size: e.target.value})}} >
+                <Select onChange={(e) => {setCartItem({...cartItem, size: e.target.value})}} color={textColor} >
                     <option value="XS">XS</option>
                     <option value="S">S</option>
                     <option value="M">M</option>
@@ -197,14 +197,14 @@ const ProductDetails = ({ product, cart }) => {
             </HStack>
 
             <HStack p={3}>
-                <Text>
+                <Text color={textColor}>
                     Antal:
                 </Text>
-                <NumberInput defaultValue={1} min={1} max={5} onChange={(e) => {setCartItem({...cartItem, amount: e})}}>
+                <NumberInput defaultValue={1} min={1} max={5} onChange={(e) => {setCartItem({...cartItem, amount: e})}} color={textColor}>
                     <NumberInputField />
                     <NumberInputStepper>
-                        <NumberIncrementStepper />
-                        <NumberDecrementStepper />
+                        <NumberIncrementStepper color={textColor}/>
+                        <NumberDecrementStepper color={textColor}/>
                     </NumberInputStepper>
                 </NumberInput>
             </HStack>
