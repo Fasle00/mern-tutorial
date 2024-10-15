@@ -15,7 +15,7 @@ router.get("/", async (req, res) => {
     const products = await Product.find({});
     res.status(200).json({ success: true, data: products });
   } catch (error) {
-    console.log("error in fetching products", error.message);
+    console.log("Error in fetching all products", error.message);
     res.status(500).json({ success: false, message: "Server error" });
   }
 });
@@ -49,7 +49,7 @@ router.post("/", async (req, res) => {
     await newProduct.save();
     return res.status(201).json({ success: true, data: newProduct });
   } catch (error) {
-    console.error(`Error in create product, error: ${error}`);
+    console.error(`Error in creating product, error: ${error}`);
     return res
       .status(500)
       .json({ success: false, message: "Internal server error" });

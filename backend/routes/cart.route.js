@@ -24,7 +24,7 @@ router.get("/", async (req, res) => {
 
     res.status(200).json({ success: true, cart: user.cart });
   } catch (error) {
-    console.log("error in fetching users", error.message);
+    console.log("Error in fetching all items in the cart", error.message);
     res.status(500).json({ success: false, message: "Server error" });
   }
 });
@@ -40,7 +40,7 @@ router.get("/:id", async (req, res) => {
 
     res.status(200).json({ success: true, cart: user.cart });
   } catch (error) {
-    console.log("error in fetching users", error.message);
+    console.log("Error in fetching the users cart by ID", error.message);
     res.status(500).json({ success: false, message: "Server error" });
   }
 });
@@ -71,13 +71,13 @@ router.post("/", async (req, res) => {
     if (itemInCart) {
       return res
         .status(400)
-        .json({ success: false, message: "Product already in cart" });
+        .json({ success: false, message: "Product already added in cart" });
     }
     user.cart.push(product);
     await user.save();
     res.status(200).json({ success: true, message: "Product added to cart" });
   } catch (error) {
-    console.log("error in adding product to cart", error.message);
+    console.log("Error in adding product to cart", error.message);
     res.status(500).json({ success: false, message: "Server error" });
   }
 });
@@ -114,7 +114,7 @@ router.delete("/", async (req, res) => {
       .status(200)
       .json({ success: true, message: "Product removed from cart" });
   } catch (error) {
-    console.log("error in removing product from cart", error.message);
+    console.log("Error in removing product from cart", error.message);
     res.status(500).json({ success: false, message: "Server error" });
   }
 });
@@ -147,7 +147,7 @@ router.put("/", async (req, res) => {
       .status(200)
       .json({ success: true, message: "Product updated in cart" });
   } catch (error) {
-    console.log("error in updating product in cart", error.message);
+    console.log("Error in updating product in cart", error.message);
     res.status(500).json({ success: false, message: "Server error" });
   }
 });
