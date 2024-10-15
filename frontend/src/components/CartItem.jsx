@@ -29,11 +29,6 @@ const CartItem = ({ cart }) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
 
 
-
-
-
-    
-    
     const handleDeleteCart = async () => {
         console.log("cart", cart)
         const { success, message } = await deleteCartItem(cart._id, cart.color, cart.size);
@@ -78,93 +73,77 @@ const CartItem = ({ cart }) => {
         }
     };
 
-let Displaycolor 
-
+    let Displaycolor
 
     return (
         <Box bg={"bg"}   >
             <HStack p={"3%"} bg={"#3A3A3A"}>
 
-
-
                 {cart.color === "röd" && (
-                   Displaycolor="red" ,
+                    Displaycolor = "red",
                     <>
-                   
                         <Box >
-                            
-                            <Image src={cart.imageRed} w={"35rem"} minW={"5rem"} aspectRatio={1/1} objectFit={"cover"} alt="image"></Image>
+
+                            <Image src={cart.imageRed} w={"35rem"} minW={"5rem"} aspectRatio={1 / 1} objectFit={"cover"} alt="image"></Image>
                         </Box>
                     </>
-                   
-                    
-                     
                 )}
+
                 {cart.color === "grön" && (
-                   Displaycolor="green",
-                   
-                   <>
+                    Displaycolor = "green",
+                    <>
                         <Box >
-                            <Image src={cart.imageGreen} w={"35rem"} minW={"5rem"} aspectRatio={1/1} objectFit={"cover"} alt="image"></Image>
+                            <Image src={cart.imageGreen} w={"35rem"} minW={"5rem"} aspectRatio={1 / 1} objectFit={"cover"} alt="image"></Image>
                         </Box>
-
                     </>
-
-                    
                 )}
+
                 {cart.color === "blå" && (
-                    Displaycolor="blue" ,<>
+                    Displaycolor = "blue", <>
                         <Box >
-                            <Image src={cart.imageBlue} w={"35rem"} minW={"5rem"} aspectRatio={1/1} objectFit={"cover"} alt="image"></Image>
+                            <Image src={cart.imageBlue} w={"35rem"} minW={"5rem"} aspectRatio={1 / 1} objectFit={"cover"} alt="image"></Image>
                         </Box>
 
                     </>
-
-                    
                 )}
+
                 {cart.color === "gul" && (
-                  Displaycolor="yellow" , <>
+                    Displaycolor = "yellow", <>
                         <Box >
-                            <Image src={cart.imageYellow} w={"35rem"}minW={"5rem"} aspectRatio={1/1} objectFit={"cover"} alt="image"></Image>
+                            <Image src={cart.imageYellow} w={"35rem"} minW={"5rem"} aspectRatio={1 / 1} objectFit={"cover"} alt="image"></Image>
                         </Box>
 
                     </>
-
-                    
                 )}
+
                 <VStack >
-
                     <Box fontSize={"110%"} p={"1%"} w={"15rem"}>
-
                         <HStack >
-                           
                             <Text fontSize={"120%"}>{cart.name}</Text>
-
-                            
-                            
-                    <IconButton bg={"#0000"} _hover={"#0000"} /* left={3} */ paddingLeft={"5rem"} onClick={handleDeleteCart}><MdDelete size={"90%"} /></IconButton>
+                            <IconButton bg={"#0000"} _hover={"#0000"} /* left={3} */ paddingLeft={"5rem"} onClick={handleDeleteCart}><MdDelete size={"90%"} /></IconButton>
                         </HStack>
 
                         <HStack pt={2}>
-
                             <Text > Färg: </Text>
                             <Text style={{ textTransform: "capitalize" }}>{cart.color}</Text>
 
                             <FaCircle color={Displaycolor} />
-                            
                         </HStack>
+
+                        <HStack pt={2}>
+                            <Text > Pris: </Text>
+                            <Text style={{ textTransform: "capitalize" }}>{cart.price}:-</Text>
+                        </HStack>
+
                         <HStack>
-                            <Text> Storlek: </Text> 
+                            <Text> Storlek: </Text>
                             <Text style={{ textTransform: "capitalize" }}>{cart.size}</Text>
                         </HStack>
                         <Text paddingBottom={2}> Antal: {cart.amount}</Text>
                     </Box>
-                   
-
                 </VStack>
             </HStack>
         </Box>
-
     )
 }
 export default CartItem
