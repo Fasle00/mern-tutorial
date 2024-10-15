@@ -16,7 +16,7 @@ env.config();
 
 // Route to get all items in the cart
 router.get("/", async (req, res) => {
-  const sessionUser = req.session.user|| {_id: "66eac8eb1f04e3e0d2ca9d15", accessLevel:"admin"};
+  const sessionUser = req.session.user;
   if (!sessionUser) return res.status(401).json({ success: false, message: "Not logged in" });
   if (!isAdminOrUser(sessionUser)) return res.status(401).json({ success: false, message: "Unauthorized" });
 
@@ -86,7 +86,7 @@ router.post("/", async (req, res) => {
 
 // Route to delete an item from the cart
 router.delete("/", async (req, res) => {
-  const sessionUser = req.session.user || {_id: "66eac8eb1f04e3e0d2ca9d15", accessLevel:"admin"};
+  const sessionUser = req.session.user;
   if (!sessionUser) return res.status(401).json({ success: false, message: "Not logged in" });
   if (!isAdminOrUser(sessionUser)) return res.status(401).json({ success: false, message: "Unauthorized" });
 
