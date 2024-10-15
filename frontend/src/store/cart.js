@@ -16,10 +16,12 @@ export const useCartStore = create((set) => ({
       },
       body: JSON.stringify(newCart),
     });
+
     const data = await res.json();
+    console.log(data)
     if (!data.success) return { success: false, message: data.message }
     set((state) => ({ carts: [...state.carts, data.cart] }));
-    return { success: true, message: "Cart created successfully" };
+    return { success: true, message: "Item added to cart" };
   },
   fetchCarts: async () => {
     const res = await fetch("/api/users/cart");

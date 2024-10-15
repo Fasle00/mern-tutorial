@@ -29,6 +29,17 @@ const CartPage = () => {
     }
     console.log("filterd", filteredProduct)
 
+
+    console.log("carts:", carts)
+
+    const calculateTotal = () => {
+        let total = 0;
+    {filteredProduct.map((cart) => (
+        total += cart.price * cart.amount
+    ))}
+    return total;
+    }
+
     return (
         <Box bg={"#3A3A3A"} w="35%" minW={"21rem"} p={3} margin={"auto"} marginTop={"2%"} style={{ fontFamily: 'Lora' }}>
             <Box bg={useColorModeValue("gray.600", "gray.600")} w="90%" p={"1%"} margin={"auto"} marginTop={"2%"}>
@@ -42,14 +53,12 @@ const CartPage = () => {
                     {filteredProduct.map((cart) => (
                         <CartItem key={cart._id} cart={cart} />
                     ))},
-
-
                 </VStack>
             </Box>
 
             <Box bg={useColorModeValue("gray.600", "gray.600")} w="90%" p={"1%"} margin={"auto"} marginTop={"2%"}>
                 <VStack spacing={"2%"}>
-                    <Text>Summa att betala:</Text>
+                    <Text>Summa att betala: {calculateTotal()}:-</Text>
                     <Button>Betala</Button>
                 </VStack>
             </Box>

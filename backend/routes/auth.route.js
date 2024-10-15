@@ -27,10 +27,8 @@ router.get("/login/success", async (req, res) => {
           user: req.user,
         });
       } catch (error) {
-        console.error(`Error in create product, error: ${error}`);
-        return res
-          .status(500)
-          .json({ success: false, message: "Internal server error" });
+        console.error(`Error in authenticating the user, error: ${error}`);
+        return res.status(500).json({ success: false, message: "Internal server error" });
       }
     } else {
       const user = await User.findOne({ googleId: req.user.id });
