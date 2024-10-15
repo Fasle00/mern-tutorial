@@ -148,13 +148,15 @@ const Navbar = ({ user, setUser }) => {
 
                                     <MenuItem>
 
-                                        <Link to={"/cart"}>
+                                        <a href="/cart">
+                                            {/* <Link to={"/cart"}> */}
                                             <Button w={"full"} bg={"bg"} variant={'link'}>
                                                 <MenuItem textColor={useColorModeValue("black", "white")}>
                                                     Cart
                                                 </MenuItem>
                                             </Button>
-                                        </Link>
+                                            {/* </Link> */}
+                                        </a>
 
                                     </MenuItem>
 
