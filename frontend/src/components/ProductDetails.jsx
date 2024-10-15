@@ -96,7 +96,7 @@ const ProductDetails = ({ product, cart }) => {
 
     const toast = useToast();
 
-    const [ cartItem, setCartItem ] = useState({
+    const [cartItem, setCartItem] = useState({
         _id: product._id,
         amount: "1",
         color: "röd",
@@ -104,27 +104,28 @@ const ProductDetails = ({ product, cart }) => {
     });
 
     if (cartItem.size === "" && product.sizes) {
-        setCartItem({...cartItem, size: product.sizes[0]});
-    } 
+        setCartItem({ ...cartItem, size: product.sizes[0] });
+    }
 
 
-    const handleAddToCart = () => {
+    const handleAddToCart = async () => {
         console.log("Lägger till i varukorgen:", cartItem);
-        const { success, message } = createCart(cartItem);
-        if (!success){
-            toast({
-            title: "Produkten har lagts till i varukorgen",
-            status: "success",
-            duration: 1500,
-            isClosable: true,
-        })
-        }else{
+        const { success, message } = await createCart(cartItem);
+        if (!success) {
             toast({
                 title: message,
                 status: "error",
                 duration: 1500,
                 isClosable: true,
-            }) 
+            })
+        } else {
+            toast({
+                title: message,
+                status: "success",
+                duration: 1500,
+                isClosable: true,
+            })
+
         }
     }
 
@@ -187,7 +188,7 @@ const ProductDetails = ({ product, cart }) => {
             </HStack>
 
             <HStack>
-                <Select onChange={(e) => {setCartItem({...cartItem, size: e.target.value})}} color={textColor} >
+                <Select onChange={(e) => { setCartItem({ ...cartItem, size: e.target.value }) }} color={textColor} >
                     <option value="XS">XS</option>
                     <option value="S">S</option>
                     <option value="M">M</option>
@@ -200,11 +201,11 @@ const ProductDetails = ({ product, cart }) => {
                 <Text color={textColor}>
                     Antal:
                 </Text>
-                <NumberInput defaultValue={1} min={1} max={5} onChange={(e) => {setCartItem({...cartItem, amount: e})}} color={textColor}>
+                <NumberInput defaultValue={1} min={1} max={5} onChange={(e) => { setCartItem({ ...cartItem, amount: e }) }} color={textColor}>
                     <NumberInputField />
                     <NumberInputStepper>
-                        <NumberIncrementStepper color={textColor}/>
-                        <NumberDecrementStepper color={textColor}/>
+                        <NumberIncrementStepper color={textColor} />
+                        <NumberDecrementStepper color={textColor} />
                     </NumberInputStepper>
                 </NumberInput>
             </HStack>
