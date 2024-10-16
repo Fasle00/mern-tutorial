@@ -120,7 +120,7 @@ const CartItem = ({ cart }) => {
                     <Box fontSize={"110%"} p={"1%"} w={"15rem"}>
                         <HStack >
                             <Text fontSize={"120%"}>{cart.name}</Text>
-                            <IconButton bg={"#0000"} _hover={"#0000"} /* left={3} */ paddingLeft={"5rem"} onClick={handleDeleteCart}><MdDelete size={"90%"} /></IconButton>
+                            <IconButton bg={"#0000"} _hover={"#0000"} /* left={3} */ paddingLeft={"5rem"} onClick={handleDeleteCart}><MdDelete size={"90%"} color="white"/></IconButton>
                         </HStack>
 
                         <HStack pt={2}>
