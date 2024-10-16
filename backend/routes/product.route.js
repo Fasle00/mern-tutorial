@@ -15,7 +15,7 @@ router.get("/", async (req, res) => {
     const products = await Product.find({});
     res.status(200).json({ success: true, data: products });
   } catch (error) {
-    console.log("error in fetching products", error.message);
+    console.log("Error in fetching all products", error.message);
     res.status(500).json({ success: false, message: "Server error" });
   }
 });
@@ -38,9 +38,7 @@ router.post("/", async (req, res) => {
     !product.imageGreen || 
     !product.imageYellow
   ) {
-    return res
-      .status(400)
-      .json({ success: false, message: "Please provide all fields" });
+    return res.status(400).json({ success: false, message: "Please provide all fields" });
   }
 
   const newProduct = new Product(product);
@@ -49,10 +47,8 @@ router.post("/", async (req, res) => {
     await newProduct.save();
     return res.status(201).json({ success: true, data: newProduct });
   } catch (error) {
-    console.error(`Error in create product, error: ${error}`);
-    return res
-      .status(500)
-      .json({ success: false, message: "Internal server error" });
+    console.error(`Error in creating product, error: ${error}`);
+    return res.status(500).json({ success: false, message: "Internal server error" });
   }
 });
 
@@ -62,6 +58,7 @@ router.put("/:id", async (req, res) => {
     return res.status(401).json({ success: false, message: "Unauthorized" });
   }
 
+  // get the product id from the request
   const id = req.params.id;
 
   const product = req.body;
@@ -75,9 +72,9 @@ router.put("/:id", async (req, res) => {
     const updatedProduct = await Product.findByIdAndUpdate(id, product, {
       new: true,
     });
-    res.status(200).json({ success: true, data: updatedProduct });
+    return res.status(200).json({ success: true, data: updatedProduct });
   } catch (error) {
-    res.status(500).json({ success: true, message: "Server error" });
+    return res.status(500).json({ success: true, message: "Server error" });
   }
 });
 
@@ -87,13 +84,12 @@ router.delete("/:id", async (req, res) => {
     return res.status(401).json({ success: false, message: "Unauthorized" });
   }
 
+  // get the product id from the request
   const id = req.params.id;
 
   // check if the product id is valid
   if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res
-      .status(404)
-      .json({ success: false, message: "Invalid Product Id" });
+    return res.status(404).json({ success: false, message: "Invalid Product Id" });
   }
 
   try {
@@ -101,9 +97,7 @@ router.delete("/:id", async (req, res) => {
     return res.status(200).json({ success: true, message: "Product deleted" });
   } catch (error) {
     console.log("Error in deleting product: ", error.message);
-    return res
-      .status(404)
-      .json({ success: false, message: "Product not found" });
+    return res.status(404).json({ success: false, message: "Product not found" });
   }
 });
 

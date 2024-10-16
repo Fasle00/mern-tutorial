@@ -19,28 +19,26 @@ router.use("/cart", cartRoutes);
 
 // Route to get all users
 router.get("/", async (req, res) => {
-  if (!isAdmin(req.session.user))
-    return res.status(401).json({ success: false, message: "Unauthorized" });
+  if (!isAdmin(req.session.user)) return res.status(401).json({ success: false, message: "Unauthorized" });
 
   try {
     const users = await User.find({});
-    res.status(200).json({ success: true, data: users });
+    return res.status(200).json({ success: true, data: users });
   } catch (error) {
-    console.log("error in fetching users", error.message);
-    res.status(500).json({ success: false, message: "Server error" });
+    console.log("Error in fetching all users", error.message);
+    return res.status(500).json({ success: false, message: "Server error" });
   }
 });
 
 // Route to update a existing user
 router.put("/:id", async (req, res) => {
   if (!isAdmin(req.session.user)) {
-    if (!req.session.user) 
-      return res.status(401).json({ success: false, message: "no session user" });
+    if (!req.session.user) return res.status(401).json({ success: false, message: "Not logged in" });
     
-    if (req.params.id === req.session.user._id) 
-      return res.status(401).json({ success: false, message: "wrong user" });
+    if (req.params.id === req.session.user._id) return res.status(401).json({ success: false, message: "wrong user" });
   }
 
+  // get the user id from the request
   const id = req.params.id;
 
   const user = req.body;
@@ -52,23 +50,22 @@ router.put("/:id", async (req, res) => {
 
   try {
     const updatedUser = await User.findByIdAndUpdate(id, user, { new: true });
-    res.status(200).json({ success: true, data: updatedUser });
+    return res.status(200).json({ success: true, data: updatedUser });
   } catch (error) {
     console.log("error in updating user", error.message);
-    res.status(500).json({ success: false, message: "Server error" });
+    return res.status(500).json({ success: false, message: "Server error" });
   }
 });
 
 // Route to delete a existing user
 router.delete("/:id", async (req, res) => {
   if (!isAdmin(req.session.user)) {
-    if (!req.session.user) 
-      return res.status(401).json({ success: false, message: "no session user" });
+    if (!req.session.user) return res.status(401).json({ success: false, message: "Not logged in" });
     
-    if (req.params.id === req.session.user._id) 
-      return res.status(401).json({ success: false, message: "wrong user" });
+    if (req.params.id === req.session.user._id) return res.status(401).json({ success: false, message: "wrong user" });
   }
 
+  // get the user id from the request
   const id = req.params.id;
 
   // check if the user id is valid
@@ -78,23 +75,22 @@ router.delete("/:id", async (req, res) => {
 
   try {
     await User.findByIdAndDelete(id);
-    res.status(200).json({ success: true, message: "User deleted" });
+    return res.status(200).json({ success: true, message: "User deleted" });
   } catch (error) {
     console.log("error in deleting user", error.message);
-    res.status(500).json({ success: false, message: "Server error" });
+    return res.status(500).json({ success: false, message: "Server error" });
   }
 });
 
 // Route to get a specific user by it's ID
 router.get("/:id", async (req, res) => {
   if (!isAdmin(req.session.user)) {
-    if (!req.session.user) 
-      return res.status(401).json({ success: false, message: "no session user" });
+    if (!req.session.user) return res.status(401).json({ success: false, message: "Not logged in" });
     
-    if (req.params.id === req.session.user._id) 
-      return res.status(401).json({ success: false, message: "wrong user" });
+    if (req.params.id === req.session.user._id) return res.status(401).json({ success: false, message: "Wrong user" });
   }
 
+  // get the user id from the request
   const id = req.params.id;
 
   // check if the user id is valid
@@ -104,10 +100,10 @@ router.get("/:id", async (req, res) => {
 
   try {
     const user = await User.findById(id);
-    res.status(200).json({ success: true, data: user });
+    return res.status(200).json({ success: true, data: user });
   } catch (error) {
     console.log("error in fetching user", error.message);
-    res.status(500).json({ success: false, message: "Server error" });
+    return res.status(500).json({ success: false, message: "Server error" });
   }
 });
 

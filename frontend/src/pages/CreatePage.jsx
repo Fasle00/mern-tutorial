@@ -11,20 +11,54 @@ import {
     Checkbox,
     Radio,
     RadioGroup,
+    useRadioGroup,
     Text,
     useToast,
     useDisclosure,
     useColorModeValue,
+    ButtonGroup
+    
 } from '@chakra-ui/react'
 import { useState } from 'react'
 import { useProductStore } from '../store/product'
 
 const CreatePage = () => {
+    /*    const handleChange = (value) => {
+           console.log("value har ändrats till:", value)
+   
+           switch (value) {
+               case 'barn':
+                   newProduct.category = "barn"
+              
+                   break;
+               case 'herr':
+                   setImageColor(product.imageGreen);
+                   setCartItem({ ...cartItem, color: 'grön' });
+                   break;
+               case 'dam':
+                   setImageColor(product.imageBlue);
+                   setCartItem({ ...cartItem, color: 'blå' });
+                   break;
+               case 'unisex':
+                   setImageColor(product.imageYellow);
+                   setCartItem({ ...cartItem, color: 'gul' });
+                   break;
+               default:
+                   setImageColor(product.imageRed);
+                   setCartItem({ ...cartItem, color: 'röd' });
+           }
+       } */
+    /* 
+        const { value, getRadioProps, getRootProps } = useRadioGroup({
+            defaultValue: 'röd',
+            onChange: handleChange,
+        }) */
 
     const { getDisclosureProps, getButtonProps, } = useDisclosure()
 
     const buttonProps = getButtonProps()
     const disclosureProps = getDisclosureProps()
+
 
     const [newProduct, setNewProduct] = useState({
         name: "",
@@ -70,6 +104,7 @@ const CreatePage = () => {
             type: "",
         });
     }
+
 
     return <Container maxW={"container.sm"} style={{ fontFamily: 'Lora' }}>
         <VStack
@@ -140,24 +175,53 @@ const CreatePage = () => {
                         value={newProduct.imageYellow}
                         onChange={(e) => setNewProduct({ ...newProduct, imageYellow: e.target.value })}
                     />
+                    {/*    <HStack>
+                        <RadioGroup onChange={(e) => newProduct.type = e.target.value}>
+                            <Radio value= "barn"> Barn</Radio>
+                            <Radio value= "herr"> Herr</Radio>
+                            <Radio value= "dam"> Dam </Radio>
+                        </RadioGroup>
+                    </HStack>
+
+                    
+                    <HStack spacing={"3rem"}>
+                        <RadioGroup onChange={(e) => {
+                            console.log(e)
+                            newProduct.type = e.target.value}}>
+                            <Radio value= "t-shirt"> T-shirt</Radio>
+                            <Radio value= "byxor"> Byxor</Radio>
+                            <Radio value= "hoodie"> Hoodie </Radio>
+                            <Radio value= "accessoarer"> Accessoarer </Radio>
+                            <Radio value= "skor"> Skor </Radio>
+                            
+                       
+                        </RadioGroup >
+                    </HStack> */}
+
 
                     <HStack>
-                        <RadioGroup>
-                            <Radio value={newProduct.category = "barn"}> Barn</Radio>
-                            <Radio value={newProduct.category = "herr"}> Herr</Radio>
-                            <Radio value={newProduct.category = "Dam"}> Dam </Radio>
-                        </RadioGroup>
+                        <ButtonGroup onClick={(e) =>  setNewProduct({ ...newProduct, category: e.target.value }) }>
+                        <Button value="barn" onClick={console.log("category", newProduct.category)} >Barn</Button>
+                        <Button value="herr" onClick={console.log("category", newProduct.category)} >Herr</Button>
+                        <Button value="dam" onClick={console.log("category", newProduct.category)} >Dam</Button>
+                        {/* <Button onClick={newProduct.category = "herr"}>Herr</Button>
+                        <Button onClick={newProduct.category = "dam"}>Dam</Button> */}
+                        
+                        </ButtonGroup>
                     </HStack>
+                    <Text textTransform="capitalize">{newProduct.category}</Text>
+                    
 
                     <HStack spacing={"3rem"}>
-                        <RadioGroup>
-                            <Radio value={newProduct.type = "T-shirt"}> T-shirt</Radio>
-                            <Radio value={newProduct.type = "Byxor"}> Byxor</Radio>
-                            <Radio value={newProduct.type = "Hoodie"}> Hoodie </Radio>
-                            <Radio value={newProduct.type = "Accessoarer"}> Accessoarer </Radio>
-                            <Radio value={newProduct.type = "Skor"}> Skor </Radio>
-                        </RadioGroup>
+                        <ButtonGroup onClick={(e) =>  setNewProduct({ ...newProduct, type: e.target.value }) }>
+                        <Button value="t-shirt" onClick={console.log("type", newProduct.type)} >T-Shirt</Button>
+                        <Button value="byxor" onClick={console.log("type", newProduct.type)} >Byxor</Button>
+                        <Button value="hoodie" onClick={console.log("type", newProduct.type)} >Hoodie</Button>
+                        <Button value="accessoarer" onClick={console.log("type", newProduct.type)} >Accessoarer</Button>
+                        <Button value="skor" onClick={console.log("type", newProduct.type)} >Skor</Button>
+                        </ButtonGroup>
                     </HStack>
+                    <Text textTransform="capitalize"> {newProduct.type} </Text>
 
                     <Button colorScheme='blue' onClick={handleAddProduct} w={'full'}>
                         Add Product
@@ -165,7 +229,7 @@ const CreatePage = () => {
 
                 </VStack>
             </Box>
-        </VStack>
-    </Container>
+        </VStack >
+    </Container >
 }
 export default CreatePage

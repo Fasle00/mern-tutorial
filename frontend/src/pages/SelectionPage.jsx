@@ -71,7 +71,7 @@ const SelectionPage = () => {
 
             <Box bgGradient='linear(to-r, #0000, #3A3A3A, #3A3A3A, #0000)' paddingLeft='40%' paddingRight='40%' >
                 <Text
-                    fontSize={["2xl", "3xl"]}
+                    fontSize={["l","2xl", "3xl"]}
                     fontWeight='extrabold'
                     color={'white'}
                     textTransform="capitalize"

@@ -25,11 +25,12 @@ app.use(
 // Passport middleware
 app.use(passport.initialize());
 app.use(passport.session());
-
+const DEV_URL = "http://localhost:5000";
+const RENDER_URL = "https://mern-tutorial-yzc5.onrender.com";
 // CORS to only allow requests from the frontend and only specific methods
 app.use(
   cors({
-    origin: "https://mern-tutorial-yzc5.onrender.com",
+    origin: DEV_URL,
     methods: "GET,POST,PUT,DELETE",
     credentials: true,
   })
