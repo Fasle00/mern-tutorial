@@ -30,7 +30,7 @@ const RENDER_URL = "https://mern-tutorial-yzc5.onrender.com";
 // CORS to only allow requests from the frontend and only specific methods
 app.use(
   cors({
-    origin: DEV_URL,
+    origin: RENDER_URL,
     methods: "GET,POST,PUT,DELETE",
     credentials: true,
   })

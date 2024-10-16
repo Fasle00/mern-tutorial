@@ -9,9 +9,11 @@ import { HamburgerIcon } from '@chakra-ui/icons'
 
 
 const Navbar = ({ user, setUser }) => {
+    const RENDER_URL = "https://mern-tutorial-yzc5.onrender.com";
+    const DEV_URL = "http://localhost:5000";
     const { colorMode, toggleColorMode } = useColorMode();
     const logout = () => {
-        window.open("http://localhost:5000/auth/logout", "_self");
+        window.open(`${RENDER_URL}/auth/logout`, "_self");
     };
     const { isOpen, onOpen, onClose } = useDisclosure();
 

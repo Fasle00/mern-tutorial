@@ -55,7 +55,7 @@ router.get("/login/failed", (req, res) => {
 router.get("/logout", (req, res) => {
   req.session.user = null;
   req.logout();
-  res.redirect(DEV_URL);
+  res.redirect(RENDER_URL);
 });
 
 // Route to authenticate with Google
@@ -68,7 +68,7 @@ router.get(
 router.get(
   "/google/callback",
   passport.authenticate("google", {
-    successRedirect: DEV_URL,
+    successRedirect: RENDER_URL,
     failureRedirect: "/login/failed",
   })
 );
