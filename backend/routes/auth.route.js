@@ -3,7 +3,7 @@ const router = express.Router();
 const passport = require("passport");
 const User = require("../models/user.model");
 
-const CLIENT_URL = "http://localhost:5000/";
+const DEV_URL = "http://localhost:5000/";
 const RENDER_URL = "https://mern-tutorial-yzc5.onrender.com/";
 
 // Callback route for a successful login 
@@ -27,10 +27,8 @@ router.get("/login/success", async (req, res) => {
           user: req.user,
         });
       } catch (error) {
-        console.error(`Error in create product, error: ${error}`);
-        return res
-          .status(500)
-          .json({ success: false, message: "Internal server error" });
+        console.error(`Error in authenticating the user, error: ${error}`);
+        return res.status(500).json({ success: false, message: "Internal server error" });
       }
     } else {
       const user = await User.findOne({ googleId: req.user.id });

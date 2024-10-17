@@ -21,8 +21,10 @@ import {
 import { color } from 'framer-motion'
 
 const LoginPage = () => {
+  const RENDER_URL = "https://mern-tutorial-yzc5.onrender.com";
+  const DEV_URL = "http://localhost:5000";
   const google = () => {
-    window.open("https://mern-tutorial-yzc5.onrender.com/auth/google", "_self");
+    window.open(`${RENDER_URL}/auth/google`, "_self");
   };
 
   /* För fler login metoder i framtiden

@@ -9,9 +9,11 @@ import { HamburgerIcon } from '@chakra-ui/icons'
 
 
 const Navbar = ({ user, setUser }) => {
+    const RENDER_URL = "https://mern-tutorial-yzc5.onrender.com";
+    const DEV_URL = "http://localhost:5000";
     const { colorMode, toggleColorMode } = useColorMode();
     const logout = () => {
-        window.open("https://mern-tutorial-yzc5.onrender.com/auth/logout", "_self");
+        window.open(`${RENDER_URL}/auth/logout`, "_self");
     };
     const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -147,55 +149,53 @@ const Navbar = ({ user, setUser }) => {
 
 
                                     <MenuItem>
-                                        <Text
-                                            color={"white"}
-                                            fontSize='3xl'
-                                            fontWeight='extrabold'
-                                            paddingLeft={5}
-                                        >
-                                            <Link to={"/cart"}>
-                                                Cart
-                                            </Link>
-                                        </Text>
+
+                                        <a href="/cart">
+                                            {/* <Link to={"/cart"}> */}
+                                            <Button w={"full"} bg={"bg"} variant={'link'}>
+                                                <MenuItem textColor={useColorModeValue("black", "white")}>
+                                                    Cart
+                                                </MenuItem>
+                                            </Button>
+                                            {/* </Link> */}
+                                        </a>
+
                                     </MenuItem>
 
                                     <Show breakpoint="(max-width: 850px)">
 
                                         <MenuItem>
-                                            <Text
-                                                color={"white"}
-                                                fontSize='3xl'
-                                                fontWeight='extrabold'
-                                                paddingLeft={5}
-                                            >
-                                                <Link to={"/dam"}>
-                                                    Dam
-                                                </Link>
-                                            </Text>
+
+                                            <Link to={"/dam"}>
+                                                <Button w={"full"} bg={"bg"} variant={'link'}>
+                                                    <MenuItem textColor={useColorModeValue("black", "white")}>
+                                                        Dam
+                                                    </MenuItem>
+                                                </Button>
+                                            </Link>
+
                                         </MenuItem>
                                         <MenuItem>
-                                            <Text
-                                                color={"white"}
-                                                fontSize='3xl'
-                                                fontWeight='extrabold'
-                                                paddingLeft={5}
-                                            >
-                                                <Link to={"/herr"}>
-                                                    Herr
-                                                </Link>
-                                            </Text>
+
+                                            <Link to={"/herr"}>
+                                                <Button w={"full"} bg={"bg"} variant={'link'}>
+                                                    <MenuItem textColor={useColorModeValue("black", "white")}>
+                                                        Herr
+                                                    </MenuItem>
+                                                </Button>
+                                            </Link>
+
                                         </MenuItem>
                                         <MenuItem>
-                                            <Text
-                                                color={"white"}
-                                                fontSize='3xl'
-                                                fontWeight='extrabold'
-                                                paddingLeft={5}
-                                            >
-                                                <Link to={"/barn"}>
-                                                    Barn
-                                                </Link>
-                                            </Text>
+
+                                            <Link to={"/barn"}>
+                                                <Button w={"full"} bg={"bg"} variant={'link'}>
+                                                    <MenuItem textColor={useColorModeValue("black", "white")}>
+                                                        Barn
+                                                    </MenuItem>
+                                                </Button>
+                                            </Link>
+
                                         </MenuItem>
                                     </Show>
 
