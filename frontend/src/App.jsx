@@ -15,11 +15,13 @@ import { useEffect, useState } from 'react';
 
 function App() {
 
+  const RENDER_URL = "https://mern-tutorial-yzc5.onrender.com";
+  const DEV_URL = "http://localhost:5000";
   const [user, setUser] = useState(null);
 
   useEffect(() => {
     const getUser = () => {
-      fetch("https://mern-tutorial-yzc5.onrender.com/auth/login/success", {
+      fetch(`${RENDER_URL}/auth/login/success`, {
         method: "GET",
         credentials: "include",
         headers: {

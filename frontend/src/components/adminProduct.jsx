@@ -54,7 +54,7 @@ const AdminProduct = ({ product }) => {
                 title: "Error",
                 description: message,
                 status: "error",
-                duration: 3000,
+                duration: 1500,
                 isClosable: true,
             });
         } else {
@@ -62,7 +62,7 @@ const AdminProduct = ({ product }) => {
                 title: "Success",
                 description: message,
                 status: "success",
-                duration: 3000,
+                duration: 1500,
                 isClosable: true,
             });
         }
@@ -77,15 +77,15 @@ const AdminProduct = ({ product }) => {
                 title: "Error",
                 description: message,
                 status: "error",
-                duration: 3000,
+                duration: 1500,
                 isClosable: true,
             });
         } else {
             toast({
                 title: "Success",
-                description: "Product updated successfully",
+                description: message,
                 status: "success",
-                duration: 3000,
+                duration: 1500,
                 isClosable: true,
             });
         }

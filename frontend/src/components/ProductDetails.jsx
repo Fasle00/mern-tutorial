@@ -96,7 +96,7 @@ const ProductDetails = ({ product, cart }) => {
 
     const toast = useToast();
 
-    const [ cartItem, setCartItem ] = useState({
+    const [cartItem, setCartItem] = useState({
         _id: product._id,
         amount: "1",
         color: "röd",
@@ -104,27 +104,28 @@ const ProductDetails = ({ product, cart }) => {
     });
 
     if (cartItem.size === "" && product.sizes) {
-        setCartItem({...cartItem, size: product.sizes[0]});
-    } 
+        setCartItem({ ...cartItem, size: product.sizes[0] });
+    }
 
 
-    const handleAddToCart = () => {
+    const handleAddToCart = async () => {
         console.log("Lägger till i varukorgen:", cartItem);
-        const { success, message } = createCart(cartItem);
-        if (!success){
+        const { success, message } = await createCart(cartItem);
+        if (!success) {
             toast({
-            title: "Produkten har lagts till i varukorgen",
-            status: "success",
-            duration: 9000,
-            isClosable: true,
-        })
-        }else{
-            toast({
-                title: "Du har inte fyllt i allt",
+                title: message,
                 status: "error",
-                duration: 9000,
+                duration: 1500,
                 isClosable: true,
-            }) 
+            })
+        } else {
+            toast({
+                title: message,
+                status: "success",
+                duration: 1500,
+                isClosable: true,
+            })
+
         }
     }
 
@@ -158,7 +159,7 @@ const ProductDetails = ({ product, cart }) => {
                     <Text color={textColor} fontSize={'4xl'}>
                         Pris: {product.price}:-
                     </Text>
-                    <Text w={"100%"} wordBreak={"keep-all"}>
+                    <Text w={"100%"} wordBreak={"keep-all"} color={textColor}>
                         {product.description}
                     </Text>
 
@@ -167,7 +168,7 @@ const ProductDetails = ({ product, cart }) => {
 
             {/* Color buttons */}
             <HStack p={3}>
-                <Text>
+                <Text color={textColor}>
                     Färg:
                 </Text>
                 <Stack {...getRootProps()}>
@@ -187,7 +188,7 @@ const ProductDetails = ({ product, cart }) => {
             </HStack>
 
             <HStack>
-                <Select onChange={(e) => {setCartItem({...cartItem, size: e.target.value})}} >
+                <Select onChange={(e) => { setCartItem({ ...cartItem, size: e.target.value }) }} color={textColor} >
                     <option value="XS">XS</option>
                     <option value="S">S</option>
                     <option value="M">M</option>
@@ -197,14 +198,14 @@ const ProductDetails = ({ product, cart }) => {
             </HStack>
 
             <HStack p={3}>
-                <Text>
+                <Text color={textColor}>
                     Antal:
                 </Text>
-                <NumberInput defaultValue={1} min={1} max={5} onChange={(e) => {setCartItem({...cartItem, amount: e})}}>
+                <NumberInput defaultValue={1} min={1} max={5} onChange={(e) => { setCartItem({ ...cartItem, amount: e }) }} color={textColor}>
                     <NumberInputField />
                     <NumberInputStepper>
-                        <NumberIncrementStepper />
-                        <NumberDecrementStepper />
+                        <NumberIncrementStepper color={textColor} />
+                        <NumberDecrementStepper color={textColor} />
                     </NumberInputStepper>
                 </NumberInput>
             </HStack>
