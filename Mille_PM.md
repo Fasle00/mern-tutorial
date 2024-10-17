@@ -12,4 +12,4 @@ projekt var väldigt intressant då vi inte riktigt gjort det förut, det fick m
 Jag förstod inte riktigt hur Github fungerade så där stötte vi på några problem. Det var också viss kod som bara spontant slutade fungera som vi behövde fixa.
 
 ##SAMMANFATTNING
-Jag tyckte att det var ett väldigt lärorikt projekt där jag fått bättre förståelse av massor av kod moment samt lärt mig nya saker. I större projekt som denna så tycker jag att grupper fungerade bra, då man inte behöver göra allt själv och att man kan fokusera på sitt egna moment.
+Jag tyckte att det var ett väldigt lärorikt projekt där jag fått bättre förståelse av massor av kod moment samt lärt mig nya saker. I större projekt som denna så tycker jag att grupper fungerade bra, då man inte behöver göra allt själv och att man kan fokusera på sitt egna moment. När man stötte på problem så var det också mycket lättare få hjälp eftersom de andra i projektet kunde hjälpa en.
