@@ -16,17 +16,25 @@ Eftersom jag arbetat med backend på detta projekt kommer jag att förklara dela
 
 I config mappen finns vår konfiguration för kommunikation med databasen MongoDB. Detta gör vi med något som kallas för mongoose som skapar en koppling mellan node.js och MongoDB, detta syns i bilden nedanför.
 
+![MongooseConfig](/docs_images/mongooseExample.png)
+
 ### Modeller
 
 I modeller finns två olika scheman som skapas med hjälp av mongoose och dessa används för att definiera olika “collections” i MongoDB. Det ena schemat är för att definiera produkter och den andra är till för att definiera användare som loggar in på vår webbshop. Inom dessa scheman vi skapar skriver vi in vilka variabler som den specifika saken kommer att behöva som t.ex användare behöver namn, email och profilbild osv. Nedan syns ett exempel på vår userSchema som är till för just användare som sparas när de loggar in med google.
+
+![MongooseUserSchema](/docs_images/schemaExample.png)
 
 ### Routes
 
 Routes används i våran app för att skapa olika URLs som till exempel /cart eller /product/:id. Dessa är också till för att en klient ska kunna skicka olika requests som GET, PUT/PATCH, DELETE och POST. Därefter skickar servern tillbaka en respons med respektive information som klienten frågade efter och visar det på den specifika URLen. Nedan syns ett exempel på en route för att uppdatera en produkt ifall användaren är administratör.
 
+![RouteToUpdateProductExample](/docs_images/routeExample.png)
+
 ### Google Oauth 2.0, passport och auth.js
 
 Passport är ett autentiserings middleware och kan användas för att logga in med Facebook, Twitter, etc. Däremot är Google Oauth 2.0 är Googles api för autentisering och auktorisering och för att få tillgång till detta måste man registrera sin app på google cloud console där man får ett google client id och en secret. Till sist i auth.js konfigurerar vi passport med Googles egna strategi för att sedan kunna logga in via Google. Med hjälp av passport serialiseras och de serialiseras även användaren som Google skickar.
+
+![PassportConfigWithGoogleExample](/docs_images/PassportExample.png)
 
 ### Server.js och validation.js
 
@@ -45,9 +53,6 @@ När vi delade upp projektet till frontend och backend kändes det inte lika tuf
 - Vad gick dåligt och varför?
 
 Negativa erfarenheter från detta projekt var i början eftersom vi inte hade särskilt stor koll på hur vi skulle arbeta tillsammans när det kommer till git och github. Det började med att vi inte visste hur man arbetade i samma projekt när det kommer till branches, merges och pull requests. Däremot efter att vi hade en genomgång av git och github blev detta betydligt mycket enklare och kommer nog definitivt kunna undvikas i framtiden. 
-
-
-
 
 ## Sammanfattning
 
